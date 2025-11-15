@@ -1,7 +1,7 @@
 package edu.ar.listovoy.model;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import jakarta.persistence.*;
 
    
@@ -23,21 +23,18 @@ public class Usuario {
     private String email;
     
     @Column
-    private boolean estado;
-    
+    private boolean estadoUsuario;
 
 
-
-
-    // Relación 1:N con Compras: Un Cliente hace muchas Compras.
+    // Relación N:1  Un Usuario realiza muchos Viajes.
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    private List<Compra> comprasRealizadas = new ArrayList<>();
+    private List<Viaje> viajesRealizados = new ArrayList<>();
 
     // Atributo de Borrado Lógico
     @Column(nullable = false)
-    private boolean estado = true;
+    private boolean estado= true;
  
-
+   // Constructores, Getters y Setters
 
     public Usuario() {}  // constructor vacio
 
@@ -59,16 +56,10 @@ public class Usuario {
     public String getApellido() { return apellido; }
     public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
-
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public boolean isEstado() { return estado; }
+    public boolean getEstado() { return estado; }
     public void setEstado(boolean estado) { this.estado = estado; }
 }
 
