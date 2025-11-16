@@ -9,11 +9,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     /**
      
-     * Obtiene una lista de Modelos de Conductor cuyo atributo 'estado' es TRUE.
+     * Obtiene una lista de Modelos de Usuarios cuyo atributo 'estado' es TRUE.
      
      * Estos son los modelos/configuraciones disponibles para la venta.
      
-     *  Lista de modelos de conductor activos.
+     *  Lista de modelos de usuarios activos.
      
      */
     List<Usuario> findByEstadoUsuarioTrue();

@@ -9,11 +9,11 @@ public interface ViajeRepository extends JpaRepository<Viaje, Integer> {
 
     /**
      
-     * Obtiene una lista de Modelos de Viaje cuyo atributo 'estado' es TRUE.
+     * Obtiene una lista de Modelos de Viajes cuyo atributo 'estado' es TRUE.
      
      * Estos son los modelos/configuraciones disponibles para la venta.
      
-     *  Lista de modelos de viaje activos.
+     *  Lista de modelos de viajes activos.
      
      */
     List<Viaje> findByEstadoViajeTrue();
