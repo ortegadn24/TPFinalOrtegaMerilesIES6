@@ -24,7 +24,7 @@ public class Conductor {
     private String email; 
 
     @Column
-    private boolean estado = true;
+    private boolean estadoConductor = true;
 
 
 
@@ -40,12 +40,12 @@ public class Conductor {
 
 
     // Constructor con parámetros (sin relaciones)
-    public Conductor(Integer conductorId, String nombre, String apellido,String email,boolean estado ) {
+    public Conductor(Integer conductorId, String nombre, String apellido,String email,boolean estadoConductor ) {
         this.conductorId = conductorId;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;  
-        this.estado = estado;
+        this.estadoConductor = estadoConductor;
     }
 
    // Getter y  setter
@@ -62,8 +62,8 @@ public class Conductor {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public Boolean getEstado() { return estado; }
-    public void setEstado(boolean estado) { this.estado = estado; }
+    public Boolean getEstadoConductor() { return estadoConductor; }
+    public void setEstadoConductor(boolean setEstadoConductor) { this.estadoConductor = setEstadoConductor; }
 
 
 }

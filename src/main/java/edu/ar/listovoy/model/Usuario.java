@@ -39,11 +39,11 @@ public class Usuario {
     public Usuario() {}  // constructor vacio
 
     // Constructores con parametros (sin relaciones)
-    public Usuario(String nombre, String apellido, String email, boolean estado) {
+    public Usuario(String nombre, String apellido, String email, boolean estadoUsuario) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.estado = true;
+        this.estadoUsuario = true;
     }
 
     // Getters y Setters
@@ -59,8 +59,8 @@ public class Usuario {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public boolean getEstado() { return estado; }
-    public void setEstado(boolean estado) { this.estado = estado; }
+    public boolean getEstadoUsuario() { return estadoUsuario; }
+    public void setEstadoUsuario(boolean estadoUsuario) { this.estadoUsuario = estadoUsuario; }
 }
 
 
