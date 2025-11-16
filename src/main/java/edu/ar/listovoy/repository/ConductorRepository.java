@@ -18,5 +18,5 @@ public interface ConductorRepository extends JpaRepository<Conductor, Integer> {
      */
     List<Conductor> findByEstadoConductorTrue();
 
-    
+
 }
