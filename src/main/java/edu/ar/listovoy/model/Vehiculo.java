@@ -1,5 +1,8 @@
 package edu.ar.listovoy.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Vehiculo {
     private Integer Patente;
     private String Marca;
