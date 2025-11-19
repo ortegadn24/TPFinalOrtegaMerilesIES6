@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LISTA VEHICULO</title>
+</head>
+<body>
+    <h1>LISTA DE VEHICULOS</h1>
+    <table>
+        <tr>
+            <th> Patente</th>
+            <th> Marca</th>
+            <th> Modelo</th>
+            <th> TipoDeVehiculo</th>
+            <th> EstadoVehiculo</th>
+
+
+        </tr>
+        <tr> data-th-each="a:  $(lista)">
+            <td> th:text="$ {a.Patente}"></td>
+            <td> th:text="$ {a.Marca}" ></td>
+            <td> th:text="$ {a.Modelo}" ></td>
+            <th> th:text="$ {a.TipoDeAuto}"></th>
+            <th> th:text="$ {a.EstadoVehiculo}"></th>
+            
+
+
+        </tr>
+    </table>
+    
+</body>
+</html>

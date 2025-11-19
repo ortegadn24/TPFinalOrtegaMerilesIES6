@@ -1,5 +1,8 @@
 package edu.ar.listovoy.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Viaje {
     private Integer ViajeId;
     private String TipoViaje;
