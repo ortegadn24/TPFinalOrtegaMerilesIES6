@@ -1,11 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Usuarios Activos</title>
 </head>
 <body>
-    
+   
+
+    <!-- Enlace para ir al formulario de creación -->
+    <p><a th:href="@{/nuevoUsuario}">Registrar Nuevo Usuario</a></p>
+
+    <h2>Usuarios Actuales:</h2>
+
+    <!-- th:if: Muestra este mensaje si la lista de Usuario está vacía -->
+    <div th:if="${usuario.isEmpty()}">
+        <p>No hay usuarios activos registrados.</p>
+    </div>
+
+    <!-- th:unless: Muestra la tabla si hay Usuario -->
+    <table border="1" th:unless="${usuario.isEmpty()}">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- th:each: Itera sobre la lista 'clientes' que viene del controlador -->
+            <tr th:each="usuario : ${usuario}">
+                <td th:text="${usuario.usuarioId}"></td>
+                <td th:text="${usuario.nombre}"></td>
+                <td th:text="${usuario.apellido}"></td>
+                <td th:text="${usuario.email}"></td>
+                <td th:text="${usuario.estadoUsuario}"></td>
+                
+               
+                <td>
+                    <a th:href="@{/detalleUsuario/{id}(id=${usuario.usuarioId})}">Ver Detalles🔎</a>
+
+                   
+                    <a th:href="@{/eliminarUsuario/{id}(id=${usuario.usuarioId})}">ELIMINAR 🔴</a>
+
+                      <a th:href="@{/editarUsuario/{id}(id=${usuario.usuarioId})}">EDITAR 🙋‍♂️🙋‍♂️🙋‍♂️</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
