@@ -2,10 +2,14 @@ package edu.ar.listovoy.repository;
 
 
 import edu.ar.listovoy.model.Usuario;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+//jpaRepository... el crud esta dentro del jpa
+@Repository
+public interface UsuarioRepository extends CrudRepository<Usuario, String> {
 
     /**
      
@@ -17,6 +21,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
      
      */
     List<Usuario> findByEstadoUsuarioTrue();
+
+    void deleteAllById(String usuarioId);
 
 
 } 

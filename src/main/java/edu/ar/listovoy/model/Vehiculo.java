@@ -2,8 +2,12 @@ package edu.ar.listovoy.model;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Entity;
+
+
 @Component
 public class Vehiculo {
+
     private Integer Patente;
     private String Marca;
     private String Modelo;

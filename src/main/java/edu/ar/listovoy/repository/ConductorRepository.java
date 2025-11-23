@@ -5,6 +5,7 @@ import edu.ar.listovoy.model.Conductor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
+//no son clases son interface..donde tenemos
 public interface ConductorRepository extends JpaRepository<Conductor, Integer> {
 
     /**

@@ -8,12 +8,12 @@ import edu.ar.listovoy.model.Conductor;
 @Controller
 public class ConductorController {
 
-    Conductor nuevoConductor = new Conductor ();  //aqui creamos un objeto nuevo alumno de tipo Alumno- en un constructur vacio
+    Conductor nuevoConductor = new Conductor ();  //aqui creamos un objeto nuevoConductor de tipo Conductor- en un constructor vacio
 
     @GetMapping("/conductores")
     public String getConductores() {
 
      
-        return "detalleConductor"; // Nombre del HTML que quieras mostrar
+        return "conductor"; // Nombre del HTML que quieras mostrar
     }
 }

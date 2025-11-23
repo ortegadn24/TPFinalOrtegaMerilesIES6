@@ -2,15 +2,18 @@ package edu.ar.listovoy.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.*;
 
-   
+@Component
 @Entity 
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer usuarioId; // PK
+    private String usuarioId; // PK
 
 
     @Column
@@ -47,8 +50,8 @@ public class Usuario {
     }
 
     // Getters y Setters
-    public Integer getUsuarioId() { return usuarioId; }
-    public void setId(Integer usuarioId) { this.usuarioId = usuarioId; }
+    public String getUsuarioId() { return usuarioId; }
+    public void setId(String usuarioId) { this.usuarioId = usuarioId; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
