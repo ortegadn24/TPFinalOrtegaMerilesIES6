@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Viaje</title>
+</head>
+<body>
+
+<h1>Registrar Viaje</h1>
+
+<form th:object="${nuevoViaje}" th:action="@{/guardarViaje}" method="post">
+
+    <label>ID del Viaje:</label>
+    <input type="number" th:field="*{viajeId}" placeholder="Ingresar ID del viaje">
+    <br><br>
+
+    <label>Tipo de Viaje:</label>
+    <input type="text" th:field="*{tipoViaje}" placeholder="Ej: Urbano, Interurbano">
+    <br><br>
+
+    <label>Costo:</label>
+    <input type="text" th:field="*{costo}" placeholder="Ej: 15000">
+    <br><br>
+
+    <label>Fecha:</label>
+    <input type="text" th:field="*{fecha}" placeholder="Ej: 2024-11-30">
+    <br><br>
+
+    <label>Estado del Viaje:</label>
+    <input type="checkbox" th:field="*{estadoViaje}">
+    <br><br>
+
+    <button type="submit">Guardar Viaje</button>
+
+</form>
+
+</body>
+</html>

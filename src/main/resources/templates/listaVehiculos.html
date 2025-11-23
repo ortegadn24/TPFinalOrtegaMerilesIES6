@@ -1,33 +1,91 @@
 <!DOCTYPE html>
-<html lang="es">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LISTA VEHICULO</title>
+    <title>Listado de Vehículos</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 80%;
+            margin: auto;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ccc;
+        }
+
+        th {
+            background-color: #444;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        .boton-volver {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            text-align: center;
+            background: #007bff;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .boton-volver:hover {
+            background: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>LISTA DE VEHICULOS</h1>
-    <table>
-        <tr>
-            <th> Patente</th>
-            <th> Marca</th>
-            <th> Modelo</th>
-            <th> TipoDeVehiculo</th>
-            <th> EstadoVehiculo</th>
 
+<h1>Listado de Vehículos Registrados</h1>
 
-        </tr>
-        <tr> data-th-each="a:  $(lista)">
-            <td> th:text="$ {a.Patente}"></td>
-            <td> th:text="$ {a.Marca}" ></td>
-            <td> th:text="$ {a.Modelo}" ></td>
-            <th> th:text="$ {a.TipoDeAuto}"></th>
-            <th> th:text="$ {a.EstadoVehiculo}"></th>
-            
+<table>
+    <thead>
+    <tr>
+        <th>Patente</th>
+        <th>Marca</th>
+        <th>Modelo</th>
+        <th>Tipo</th>
+        <th>Estado</th>
+    </tr>
+    </thead>
 
+    <tbody>
+    <!-- Recorre la lista enviada desde el controller -->
+    <tr th:each="v : ${lista}">
+        <td th:text="${v.patente}"></td>
+        <td th:text="${v.marca}"></td>
+        <td th:text="${v.modelo}"></td>
+        <td th:text="${v.tipoVehiculo}"></td>
+        <td th:text="${v.estado}"></td>
+    </tr>
+    </tbody>
+</table>
 
-        </tr>
-    </table>
-    
+<a href="/Vehiculo" class="boton-volver">Cargar un nuevo vehículo</a>
+
 </body>
 </html>
