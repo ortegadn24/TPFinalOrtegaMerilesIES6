@@ -1,22 +1,15 @@
 package edu.ar.listovoy.repository;
 
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 
 import edu.ar.listovoy.model.Viaje;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.List;
 
-public interface ViajeRepository extends JpaRepository<Viaje, Integer> {
-
-    /**
-     
-     * Obtiene una lista de Modelos de Viajes cuyo atributo 'estado' es TRUE.
-     
-     * Estos son los modelos/configuraciones disponibles para la venta.
-     
-     *  Lista de modelos de viajes activos.
-     
-     */
-    List<Viaje> findByEstadoViajeTrue();
+@Repository
+public interface ViajeRepository extends CrudRepository<Viaje,Integer> {
     
+
+
     
 }

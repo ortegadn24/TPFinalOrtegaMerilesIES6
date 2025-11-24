@@ -1,6 +1,5 @@
 package edu.ar.listovoy.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,26 +7,28 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import edu.ar.listovoy.model.Vehiculo;
- @Service
- @Qualifier("servicioVehiculoArrayList")
-public class VehiculoServiceImp implements VehiculoService {
+import edu.ar.listovoy.repository.VehiculoRepository;
+@Service
+@Qualifier("servicioVehiculoMySQL")
 
-     List <Vehiculo> listadoDeVehiculos = new ArrayList <Vehiculo> ();
 
+public class  VehiculoServiceImpDB implements VehiculoService  {
     @Autowired
     Vehiculo nuevoVehiculo;
 
+    @Autowired
+    VehiculoRepository vehiculoRepository;
+
     @Override
     public void borrarVehiculo(Integer Patente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'borrarVehiculo'");
+        vehiculoRepository.deleteById(Patente);
+
+     
     }
 
     @Override
     public void agregarVehiculo(Vehiculo Vehiculo) {
-         listadoDeVehiculos.add(Vehiculo);
-         System.out.println(listadoDeVehiculos.size());
-    
+        vehiculoRepository.save(Vehiculo);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class VehiculoServiceImp implements VehiculoService {
 
     @Override
     public List<Vehiculo> listarTodosVehiculos() {
-       return listadoDeVehiculos;
+        return (List<Vehiculo>) vehiculoRepository.findAll();
     }
 
     @Override
@@ -54,12 +55,12 @@ public class VehiculoServiceImp implements VehiculoService {
     }
 
     @Override
-    public Vehiculo crearNuevoVehiculo() { 
-        // lógica para crear nuevo Vehiculo
-        //Vehiculo nuevoVehiculo = new Vehiculo ();
+    public Vehiculo crearNuevoVehiculo() {
         return nuevoVehiculo;
-
-       
+        
     }
+
     
+ 
+
 }

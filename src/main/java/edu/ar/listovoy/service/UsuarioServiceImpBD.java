@@ -21,6 +21,7 @@ public class UsuarioServiceImpBD implements UsuarioService {
 
     @Override
     public void borrarUsuario(String UsuarioId) {
+    
         usuarioRepository.deleteAllById(UsuarioId); //le esta mandando al reposotory borrar de la lista
     }
 
@@ -43,9 +44,9 @@ public class UsuarioServiceImpBD implements UsuarioService {
     }
 
     @Override
-    public Usuario buscarUnUsuario(Integer UsuarioId) {
+    public Usuario buscarUnUsuario(String usuarioId) throws Exception {
       
-        throw new UnsupportedOperationException("Unimplemented method 'buscarUnUsuario'");
+       return usuarioRepository.findById(usuarioId).orElseThrow(()-> new Exception("alumno no encontrado"));
     }
 
     @Override

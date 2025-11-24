@@ -54,8 +54,8 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public Usuario crearNuevoUsuario() {
-      // Usuario nuevUsuario = new Usuario();
-       return nuevUsuario;
+      // Usuario nuevoUsuario = new Usuario();
+       return nuevoUsuario;
     }
 
     @Override

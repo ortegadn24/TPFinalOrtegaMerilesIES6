@@ -2,65 +2,96 @@ package edu.ar.listovoy.model;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+
 @Component
+@Entity
 public class Viaje {
-    private Integer ViajeId;
-    private String TipoViaje;
-    private String Costo;
-    private String Fecha;
-    private boolean EstadoViaje;
+    //atributos
+    @Id
+    private Integer viajeId;
+
+    @Column
+    private String tipoViaje;
+    @Column
+    private String costo;
+    @Column
+    private String fecha;
+    @Column
+    private boolean estadoViaje;
+
+    // --------- RELACIONES -----------
+
+    // Muchos viajes pertenecen a un usuario
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")   // FK
+    private Usuario usuario;
+
+    // Muchos viajes usan un vehículo
+    @ManyToOne
+    @JoinColumn(name = "patente")      // FK
+    private Vehiculo vehiculo;
+
+    // --------- CONSTRUCTORES -----------
+
+
 
     public Viaje (){
+        
 
     }
-    public Viaje (Integer ViajeId,String TipoViaje,String Costo,String Fecha,boolean EstadoViaje){
-        this.ViajeId = ViajeId;
-        this.TipoViaje = TipoViaje;
-        this.Costo = Costo;
-        this.Fecha = Fecha;
-        this.EstadoViaje = EstadoViaje;
+    public Viaje (Integer viajeId,String tipoViaje,String costo,String fecha,boolean estadoViaje){
+        this.viajeId = viajeId;
+        this.tipoViaje = tipoViaje;
+        this.costo = costo;
+        this.fecha = fecha;
+        this.estadoViaje = estadoViaje;
     }
 
     // metodos particulares o accesores de los atributos
 
     public Integer getViajeId() {
-        return ViajeId;
+        return viajeId;
     }
 
-      public void setViajeId(Integer ViajeId) {
-        this.ViajeId = ViajeId;
+      public void setViajeId(Integer viajeId) {
+        this.viajeId = viajeId;
     }
 
         public String getTipoViaje() {
-        return TipoViaje;
+        return tipoViaje;
     }
 
-     public void setTipoViaje(String TipoViaje) {
-        this.TipoViaje = TipoViaje;
+     public void setTipoViaje(String tipoViaje) {
+        this.tipoViaje = tipoViaje;
     }
 
       public String getCosto() {
-        return Costo;
+        return costo;
     }
 
-     public void setCosto(String Costo) {
-        this.Costo = Costo;
+     public void setCosto(String costo) {
+        this.costo = costo;
     }
 
      public String getFecha() {
-        return Fecha;
+        return fecha;
     }
 
-     public void setFecha(String Fecha) {
-        this.Fecha = Fecha;
+     public void setFecha(String fecha) {
+        this.fecha = fecha;
     }
 
     public boolean getEstadoViaje() {
-        return EstadoViaje;
+        return estadoViaje;
     }
 
-     public void setEstado(boolean EstadoViaje) {
-        this.EstadoViaje = EstadoViaje;
+     public void setEstado(boolean estadoViaje) {
+        this.estadoViaje = estadoViaje;
     }
     
 
