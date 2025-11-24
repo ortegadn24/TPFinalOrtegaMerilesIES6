@@ -57,6 +57,12 @@ public class UsuarioServiceImp implements UsuarioService {
       // Usuario nuevUsuario = new Usuario();
        return nuevUsuario;
     }
+
+    @Override
+    public Usuario buscarUnUsuario(Integer UsuarioId) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarUnUsuario'");
+    }
 }
 
 

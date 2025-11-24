@@ -10,7 +10,7 @@ import edu.ar.listovoy.model.Usuario;
 import edu.ar.listovoy.repository.UsuarioRepository;
 
 @Service
-
+@Qualifier("servicioUsuarioMySQL")
 public class UsuarioServiceImpBD implements UsuarioService {
 
      @Autowired
@@ -21,7 +21,7 @@ public class UsuarioServiceImpBD implements UsuarioService {
 
     @Override
     public void borrarUsuario(String UsuarioId) {
-        usuarioRepository.deleteAllById(UsuarioId);
+        usuarioRepository.deleteAllById(UsuarioId); //le esta mandando al reposotory borrar de la lista
     }
 
     @Override

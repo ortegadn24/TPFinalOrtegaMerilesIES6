@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.ar.listovoy.model.Usuario;
 import edu.ar.listovoy.service.UsuarioService;
-import edu.ar.listovoy.service.UsuarioService;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
 
 
 @Controller
@@ -45,8 +48,9 @@ public class UsuarioController{
 
     ModelAndView carrito = new ModelAndView("usuario");
     //codigo
-    //return "alumno"
+    //return "usuario"
     carrito.addObject("nuevoUsuario", usuarioService.crearNuevoUsuario() );
+    carrito.addObject("band",false);
     return carrito;
 
    }
@@ -59,6 +63,26 @@ public class UsuarioController{
         modelView.addObject("lista", usuarioService.listarTodosUsuario());
         return modelView;
     }
+
+    //ELIMINAR
+    @GetMapping("/eliminarUsuario/{usuarioId}")
+     public ModelAndView eliminarUsuario(@PathVariable(name="usuarioId") String usuarioId) {
+         ModelAndView carritoDeEliminar = new ModelAndView("listaUsuario");
+         usuarioService.borrarUsuario(usuarioId);  //le manda al serv. la tarea para que se encargue de borrar cierto usuario q tiene este id
+         carritoDeEliminar.addObject("lista", usuarioService.listarTodosUsuario());  //actualiza la lista para mandarsela ala vista
+        return carritoDeEliminar; //retorna el carrito
+    }
+
+    //Modificar
+    @GetMapping("/modificarUsuario/(usuarioID)")
+        public ModelAndView buscarUsuarioParaModificar(@PathVariable(name="usuarioId") String usuarioId) throws Exception {
+        ModelAndView carritoParaModificarUsuario =new ModelAndView("usuario");
+        carritoParaModificarUsuario.addObject("nuevoUsuario", usuarioService.buscarUnUsuario(usuarioId));
+        carritoParaModificarUsuario.addObject("band",true);
+        return carritoParaModificarUsuario;
+    }
+    
+     
       
      
         
@@ -90,3 +114,4 @@ public class UsuarioController{
 
 
     
+ 

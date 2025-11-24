@@ -13,7 +13,7 @@
     </header>
 
     <main>
-        <form data-th-object="${nuevoUsuario}" data-th-action="@{/guardarUsuario}" method="post"enctype="multipart/form-date">
+        <form data-th-object="${nuevoUsuario}" data-th-action="${band}?@{/modificarUsuario}:@{/guardarUsuario}" method="post"enctype="multipart/form-date">
             <label>Id</label>
             <input type="text" placeholder="ingresar id" required data-th-field="*{id}"/>
             <label>Nombre</label>
