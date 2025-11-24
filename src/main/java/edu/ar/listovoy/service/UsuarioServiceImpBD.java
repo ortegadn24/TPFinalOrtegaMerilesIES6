@@ -4,29 +4,34 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.stereotype.Service;
 
 import edu.ar.listovoy.model.Usuario;
 import edu.ar.listovoy.repository.UsuarioRepository;
 
 @Service
+
 @Qualifier("servicioUsuarioMySQL")
 public class UsuarioServiceImpBD implements UsuarioService {
 
      @Autowired
-    Usuario nuevUsuario; //estamos inyectando la dependencia Usuario que se llama NuevoUsuario
+    Usuario nuevoUsuario; //estamos inyectando la dependencia Usuario que se llama NuevoUsuario
        //va a cuenta de   Usuario nuevoUsuario = new Usuario();
     @Autowired
      UsuarioRepository usuarioRepository; //usamos esto xq ahi mucha interaccion con el sistema y para no sobre cargar la memoria.
 
     @Override
-    public void borrarUsuario(String UsuarioId) {
-    
-        usuarioRepository.deleteAllById(UsuarioId); //le esta mandando al reposotory borrar de la lista
+    public void borrarUsuario(String usuarioId) throws Exception {       
+        Usuario usuarioBorrar = usuarioRepository.findById(usuarioId).orElseThrow(()-> new Exception("usuario no encontrado"));
+        usuarioBorrar.setEstadoUsuario(false);   //gral: entro ,lo busco, se  le asigno a borrar
+        usuarioRepository.save(usuarioBorrar);                  //g: en borrado le cambio el estado y luego lo guardo.
+        //usuarioRepository.deleteAllById(UsuarioId); //le esta mandando al reposotory borrar de la lista
     }
 
     @Override
     public void agregarUsuario(Usuario usuario) {
+        usuario.setEstadoUsuario(true);
        usuarioRepository.save(usuario);
        
     }
@@ -46,18 +51,26 @@ public class UsuarioServiceImpBD implements UsuarioService {
     @Override
     public Usuario buscarUnUsuario(String usuarioId) throws Exception {
       
-       return usuarioRepository.findById(usuarioId).orElseThrow(()-> new Exception("alumno no encontrado"));
+       return usuarioRepository.findById(usuarioId).orElseThrow(()-> new Exception("usuario no encontrado"));
     }
 
     @Override
-    public Usuario buscarPorUsuarioIdUsuario(String nombre) {
+    public Usuario buscarPorNombreUsuario(String nombre) {
        
         throw new UnsupportedOperationException("Unimplemented method 'buscarPorUsuarioIdUsuario'");
     }
 
     @Override
     public Usuario crearNuevoUsuario() {
-        return nuevUsuario;
+        return nuevoUsuario;
+    }
+
+    
+
+    @Override
+    public List<Usuario> listarTodosUsuariosActivos() {
+       return usuarioRepository.finByUsuarioEstado(true);
+        
     }
 
 

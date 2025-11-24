@@ -16,7 +16,8 @@ public class UsuarioServiceImp implements UsuarioService {
     List<Usuario> listadoDeUsuarios = new ArrayList<Usuario>();
     
 
-   
+    @Autowired
+    Usuario nuevoUsuario;
 
     @Override
     public void borrarUsuario(String UsuarioId) {
@@ -44,12 +45,14 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public Usuario buscarUnUsuario(String UsuarioId) {
-        
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorNombreUsuario'"); 
     }
 
     @Override
-    public Usuario buscarPorUsuarioIdUsuario(String nombre) {
-       
+    public Usuario buscarPorNombreUsuario(String nombre) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorNombreUsuario'");
     }
 
     @Override
@@ -58,10 +61,13 @@ public class UsuarioServiceImp implements UsuarioService {
        return nuevoUsuario;
     }
 
+   
+
+
     @Override
-    public Usuario buscarUnUsuario(Integer UsuarioId) {
+    public List<Usuario> listarTodosUsuariosActivos() {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarUnUsuario'");
+        throw new UnsupportedOperationException("Unimplemented method 'listarTodosUsuariosActivos'");
     }
 }
 

@@ -8,12 +8,9 @@
 
 <body>
     <h1>LISTA DE USUARIOS</h1>
-   <div class="conteiner">
+   <div class="conteiner"> 
    
-    <!-- Enlace para ir al formulario de creación -->
-    <p><a th:href="@{/nuevoUsuario}">Registrar Nuevo Usuario</a></p>
-
-    <h2></h2>
+    
 
      
     <!-- th:unless: Muestra la tabla si hay Usuario -->
@@ -24,7 +21,7 @@
                 <th>Nombre</th>
                 <th>Apellido</th>
                 <th>Email</th>
-                <th>Estado</th>
+                
                 <th>Edicion</th>
                 
             </tr>
@@ -37,7 +34,7 @@
                 <td th:text="${usuario.nombre}"></td>
                 <td th:text="${usuario.apellido}"></td>
                 <td th:text="${usuario.email}"></td>
-                <td th:text="${usuario.estadoUsuario}"></td>
+               
                 <td>
                     <a data-th-href="@{'/eliminarUsuario/'+${u.usuarioId}|}" class="btn btn-danger">Borrar</a>
                     <a data-th-href="@{'/modificarUsuario/'+${u.usuarioId}|}" class="btn btn-success">Editar</a>
@@ -51,10 +48,7 @@
 
         </tbody>
     </table>
-    <div th:if="${usuario.isEmpty()}">
-        <p>No hay usuarios activos registrados.</p>
-        <!-- th:if: Muestra este mensaje si la lista de Usuario está vacía -->
-    </div>
+   </div>
      
     
 

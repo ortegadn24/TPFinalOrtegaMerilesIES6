@@ -1,11 +1,10 @@
 package edu.ar.listovoy.controller;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.ar.listovoy.model.Usuario;
 import edu.ar.listovoy.service.UsuarioService;
-import org.springframework.web.bind.annotation.RequestParam;
+
+
+
+
 
 
 
@@ -28,13 +30,13 @@ public class UsuarioController{
    
     @Qualifier("servicioUsuarioMySQL")
     @Autowired
-    UsuarioService uService;
+    UsuarioService uuarioService;
 
     UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/usuarioo")
+    @GetMapping("/usuario")
 
   public ModelAndView getUsuario () {
     //public string getUsuario() {
@@ -60,17 +62,17 @@ public class UsuarioController{
         usuarioService.agregarUsuario(usuarioParaGuardar);
         ModelAndView modelView = new ModelAndView("listaUsuarios");
         System.out.println("usuario guardado correctamente");
-        modelView.addObject("lista", usuarioService.listarTodosUsuario());
+        modelView.addObject("lista", usuarioService.listarTodosUsuariosActivos());
         return modelView;
     }
 
     //ELIMINAR
     @GetMapping("/eliminarUsuario/{usuarioId}")
-     public ModelAndView eliminarUsuario(@PathVariable(name="usuarioId") String usuarioId) {
+     public ModelAndView eliminarUsuario(@PathVariable(name="usuarioId") String usuarioId) throws Exception {
          ModelAndView carritoDeEliminar = new ModelAndView("listaUsuario");
          usuarioService.borrarUsuario(usuarioId);  //le manda al serv. la tarea para que se encargue de borrar cierto usuario q tiene este id
-         carritoDeEliminar.addObject("lista", usuarioService.listarTodosUsuario());  //actualiza la lista para mandarsela ala vista
-        return carritoDeEliminar; //retorna el carrito
+         carritoDeEliminar.addObject("lista", usuarioService.listarTodosUsuariosActivos());  //actualiza la lista para mandarsela ala vista
+        return carritoDeEliminar; //retorna al carrito
     }
 
     //Modificar
@@ -80,6 +82,24 @@ public class UsuarioController{
         carritoParaModificarUsuario.addObject("nuevoUsuario", usuarioService.buscarUnUsuario(usuarioId));
         carritoParaModificarUsuario.addObject("band",true);
         return carritoParaModificarUsuario;
+    }
+    
+    @PostMapping("/modificarUsuario")
+    public ModelAndView modificarCliente (@ModelAttribute ("nuevoUsuario") Usuario usuarioModificado) {
+        ModelAndView listadoEditado = new ModelAndView("listaUsuario");
+        usuarioService.agregarUsuario(usuarioModificado);
+        listadoEditado.addObject("lista", usuarioService.listarTodosUsuariosActivos());
+
+        return listadoEditado;
+    }
+    
+
+    @GetMapping("/listarUsuarios")
+    public ModelAndView listarUsuariosActivos(){
+    ModelAndView carritoParaMostrarUsuarios = new ModelAndView("listaUsuario");
+    carritoParaMostrarUsuarios.addObject("lista", usuarioService.listarTodosUsuariosActivos());
+    
+        return carritoParaMostrarUsuarios;
     }
     
      
