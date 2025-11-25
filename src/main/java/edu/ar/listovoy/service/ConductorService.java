@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class ConductorService {
 
-    // Inyección de dependencias: permite usar los métodos del Conductor
+    // Inyección de dependencias: permite usar los métodos del Repository
     @Autowired
     private ConductorRepository conductorRepository;
 
@@ -21,68 +21,68 @@ public class ConductorService {
 
     // 1. CREAR / GUARDAR (Create)
     /**
-     * Guarda un nuevo conductor o actualiza uno existente.
-     *  El objeto Conductor a persistir.
-     *  El objeto Conductor guardado/actualizado.
+     * Guarda un nuevo cliente o actualiza uno existente.
+     *  El objeto Cliente a persistir.
+     *  El objeto Cliente guardado/actualizado.
      */
-    public Conductor guardarConductor(Conductor conductor) {
+    public Conductor guardaConductor(Conductor conductor) {
         // La lógica de negocio podría ir aquí (ej: validar email antes de guardar)
         return conductorRepository.save(conductor);
     }
     
     // 2. "LEER TODOS' (Read All) - Filtrado por Borrado Lógico
     /**
-     * Obtiene todos los conductor cuyo estado es TRUE (activos).
+     * Obtiene todos los c cuyo estado es TRUE (activos).
      * Usa el Query Method definido en el Repository.
-     *  Lista de conductor activos.
+     *  Lista de c activos.
      */
+    // Archivo: edu.ar.listovoy.service.ConductorService
+
     public List<Conductor> obtenerTodosConductorActivos() {
-        return conductorRepository.findByEstadoConductorTrue();
-    }
+    // Llama al método corregido
+    return conductorRepository.findByEstadoConductor(true); 
+}
     
     // 3. LEER POR ID (Read By ID)
     /**
-     * Obtiene un conductor por su ID, independientemente de su estado (activo o inactivo).
-     *  El ID del conductor a buscar.
-     *  Un objeto Optional que puede contener el conductor.
+     * Obtiene un c por su ID, independientemente de su estado (activo o inactivo).
+     *  El ID del c a buscar.
+     *  Un objeto Optional que puede contener el C.
      */
     public Optional<Conductor> obtenerConductorPorId(Integer conductorId) {
-        // Usamos findById que devuelve un Optional para manejar la posible ausencia del conductor.
+        // Usamos findById que devuelve un Optional para manejar la posible ausencia del c.
         return conductorRepository.findById(conductorId);
     }
     
     // 4. ACTUALIZAR (Update)
     /**
-     * Actualiza la información de un conductor existente.
-     * id El ID del conductor a actualizar.
-     * detallesConductor Los nuevos datos del conductor.
-     *  El conductor actualizado o null si no se encontró.
+     * Actualiza la información de un cliente existente.
+     * id El ID del cliente a actualizar.
+     * detallesCliente Los nuevos datos del cliente.
+     *  El cliente actualizado o null si no se encontró.
      */
     public Conductor actualizarConductor(Integer conductorId, Conductor detallesConductor) {
-        // 1. Busca el Conductor existente
+        // 1. Busca el c existente
         return conductorRepository.findById(conductorId).map(conductorExistente -> {
             // 2. Actualiza los campos (se asume que el ID ya está validado)
-            conductorExistente.setEstadoConductor(detallesConductor.getEstadoConductor());
             conductorExistente.setNombre(detallesConductor.getNombre());
             conductorExistente.setApellido(detallesConductor.getApellido());
             conductorExistente.setEmail(detallesConductor.getEmail());
-          
-           
            
             
             // Nota: Podrías optar por no actualizar el estado aquí, o dejar que la lógica de soft-delete lo maneje.
-            // Para simplicidad, la actualización de estado solo se hace en eliminarConductorLogico.
+            // Para simplicidad, la actualización de estado solo se hace en eliminarClienteLogico.
             
             // 3. Guarda la entidad actualizada
             return conductorRepository.save(conductorExistente);
-        }).orElse(null); // Devuelve null si no encuentra el conducta
+        }).orElse(null); // Devuelve null si no encuentra el c
     }
 
     // 5. ELIMINAR (Delete) - Borrado Lógico
     /**
      * Realiza un borrado lógico, cambiando el atributo 'estado' a FALSE.
-     *  El ID del conductor a desactivar.
-     *  true si la eliminación lógica fue exitosa, false si el Conductor no fue encontrado.
+     *  El ID del c a desactivar.
+     *  true si la eliminación lógica fue exitosa, false si el c no fue encontrado.
      */
     public boolean eliminarConductorLogico(Integer conductorId) {
         Optional<Conductor> conductorEncontrado = conductorRepository.findById(conductorId);    
@@ -92,6 +92,6 @@ public class ConductorService {
             conductorRepository.save(conductor); // Persiste el cambio de estado
             return true;
         }
-        return false; // Conductor no encontrado para eliminar
+        return false; // C no encontrado para eliminar
     }
 }

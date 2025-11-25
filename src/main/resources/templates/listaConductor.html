@@ -10,10 +10,56 @@
 <body>
     <h1 >Lista de Conductores Disponibles.. :)</h1>
 
+     <div class="conteiner"> 
+   
     
-    <footer class="bg-light text-center py-3 mt-4">
+
+     
+    <!-- th:unless: Muestra la tabla si hay Conductores -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                
+                <th>Edicion</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <!-- th:each: Itera sobre la lista 'conductor' que viene del controlador -->
+            <tr data-th-each="conductor : ${listaConductor}">  <!--stoy llamando ala lista de alumno y haciend un recorrido x cada elemento -->
+
+                <td th:text="${conductor.conductorId}"></td>
+                <td th:text="${conductor.nombre}"></td>
+                <td th:text="${conductor.apellido}"></td>
+                <td th:text="${conductor.email}"></td>
+               
+                <td>
+                    <a data-th-href="@{'/eliminarConductor/'+${conductor.conductorId}|}" class="btn btn-danger">Borrar</a>
+                    <a data-th-href="@{'/modificarConductor/'+${conductor.conductorId}|}" class="btn btn-success">Editar</a>
+                </td>
+                
+               
+                
+            </tr>
+            
+
+        </tbody>
+     </table>
+      </div>
+     
+        <div class="text-center mt-4">
+            <a href="/conductor" class="btn btn-success btn-lg">Cargar nuevo Conductor</a>
+            <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
+        </div>
+
+    
+      <footer class="bg-light text-center py-3 mt-4">
         <p class="mb-0">By OrtegaDaiana-MerilesWalter</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+       </footer>
+       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@
    
     
 
-     
+     <main>
     <!-- th:unless: Muestra la tabla si hay Usuario -->
     <table class="table table-striped">
         <thead>
@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <!-- th:each: Itera sobre la lista 'usuarios' que viene del controlador -->
-            <tr data-th-each="usuario : ${listaUsuario}">  # stoy llamando ala lista de alumno y haciend un recorrido x cada elemento
+            <tr data-th-each="usuario : ${listaUsuario}">  <!--stoy llamando ala lista de alumno y haciend un recorrido x cada elemento -->
 
                 <td th:text="${usuario.usuarioId}"></td>
                 <td th:text="${usuario.nombre}"></td>
@@ -47,9 +47,13 @@
       
 
         </tbody>
-    </table>
-   </div>
+   </table>
+      </div>
      
+        <div class="text-center mt-4">
+            <a href="/usuario" class="btn btn-success btn-lg">Cargar nuevo usuario</a>
+            <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
+        </div>
     
 
     <footer class="bg-light text-center py-3 mt-4">

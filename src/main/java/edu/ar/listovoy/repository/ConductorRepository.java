@@ -2,22 +2,28 @@ package edu.ar.listovoy.repository;
 
 
 import edu.ar.listovoy.model.Conductor;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
-//no son clases son interface..donde tenemos
-public interface ConductorRepository extends JpaRepository<Conductor, Integer> {
-
+//jpaRepository... el crud esta dentro del jpa
+@Repository
+public interface ConductorRepository extends CrudRepository<Conductor, Integer> {
+    
+    List<Conductor> findByEstadoConductor(Boolean estado);
     /**
      
-     * Obtiene una lista de Modelos de Conductores cuyo atributo 'estado' es TRUE.
+     * Obtiene una lista de Modelos de Conductor cuyo atributo 'estado' es TRUE.
      
-     * Estos son los modelos/configuraciones disponibles para la venta.
+     * Estos son los Conductor/configuraciones disponibles para la venta.
      
-     *  Lista de modelos de conductores activos.
+     *  Lista de modelos de usuarios activos.
      
      */
-    List<Conductor> findByEstadoConductorTrue();
+    //List<Usuario> findByEstadoConductorTrue();
+
+    //void deleteAllById(String conductorId);
 
 
 } 

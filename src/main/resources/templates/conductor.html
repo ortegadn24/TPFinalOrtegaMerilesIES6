@@ -13,16 +13,25 @@
      <h1>Registro de Conductores</h1>
    </header>
     
-   <main>
-    <form>
-        <label>Nombre</label>
-        <imput type="text" placeholder="ingresar nombre"/>
-        <label>Apellido</label>
-        <imput type="text" aria-placeholder="ingrese apellido"/>
-        <imput type="button"value>INGRESAR CONDUCTOR</imput>
+   
+    <main>
+        <form data-th-object="${conductor}" data-th-action="${isEdit} ? @{/actualizarConductor/{id}(id=${conductor.conductorId})} : @{/guardarC}" method="post" enctype="multipart/form-data">
 
-    </form>
-   </main>
+        <input type="hidden" data-th-field="*{conductorId}" th:if="${isEdit}"/>
+            <label>Nombre</label>
+            <input type="text" placeholder="ingresar nombre"  data-th-field="*{nombre}" required/>
+            <label>Apellido</label>
+            <input type="text" placeholder="ingresar apellido" data-th-field="*{apellido}"  required/>
+            
+            <label>Email</label>
+            <input type="text" placeholder="ingresar email"  data-th-field="*{email}" required/>
+            
+            <button type="submit">INGRESAR</button > 
+        </form>
+
+    </main>
+
+
     <footer class="bg-light text-center py-3 mt-4">
         <p class="mb-0">By OrtegaDaiana-MerilesWalter</p>
     </footer>

@@ -23,10 +23,6 @@ public class Conductor {
     @Column
     private String email; 
 
-    @Column
-    private boolean estadoConductor = true;
-
-
 
     // Relación 1:1 Conductor/Vehiculo : un conductor tienen un vehiculo. Un vehiculo tiene un conductor
    
@@ -35,7 +31,11 @@ public class Conductor {
     private Vehiculo vehiculo;
 
 
-     // Constructor Vacío
+   // Atributo de Borrado Lógico
+    @Column(nullable = false)
+    private boolean estadoConductor= true;
+
+    // Constructor Vacío
     public Conductor() {}
 
 
