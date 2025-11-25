@@ -11,21 +11,56 @@ import edu.ar.listovoy.repository.ViajeRepository;
 @Service("servicioViajeMySQL")
 public class ViajeServiceImp implements ViajeService {
 
-    @Autowired
-    private ViajeRepository viajeRepository;
-
     @Override
-    public Viaje crearNuevoViaje(Viaje viaje) {
-        return viajeRepository.save(viaje);
+    public void borrarViaje(Integer id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'borrarViaje'");
     }
 
     @Override
-    public void agregarViaje(Viaje viaje) {
-        viajeRepository.save(viaje);
+    public void agregarViaje(Viaje Viaje) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'agregarViaje'");
     }
 
     @Override
-    public List<Viaje> listarTodosLosViajes() {
-        return (List<Viaje>) viajeRepository.findAll();
+    public void modificarViaje(Viaje Viaje) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'modificarViaje'");
     }
+
+    @Override
+    public List<Viaje> listarTodosViajes() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarTodosViajes'");
+    }
+
+    @Override
+    public Viaje buscarUnVehiculo(Integer id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarUnVehiculo'");
+    }
+
+    @Override
+    public Viaje buscarUnViajePorNombre(String nombre) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarUnViajePorNombre'");
+    }
+
+    @Override
+    public Viaje crearNuevoViaje(Viaje Viaje) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'crearNuevoViaje'");
+    }
+
+   
+    }
+
+
+    
+
+
+   
+
+    
 }

@@ -37,14 +37,16 @@ public class VehiculoServiceImp implements VehiculoService {
     }
 
     @Override
-    public List<Vehiculo> listarTodosVehiculos() {
-       return listadoDeVehiculos;
+    public  List<Vehiculo> listarTodosVehiculos() {
+        return listadoDeVehiculos;
+      
+       
     }
 
     @Override
     public Vehiculo buscarUnVehiculo(Integer Patente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarUnVehiculo'");
+        return listadoDeVehiculos.strean()
+       
     }
 
     @Override
@@ -57,7 +59,7 @@ public class VehiculoServiceImp implements VehiculoService {
     public Vehiculo crearNuevoVehiculo() { 
         // lógica para crear nuevo Vehiculo
         //Vehiculo nuevoVehiculo = new Vehiculo ();
-        return nuevoVehiculo;
+        return new Vehiculo();
 
        
     }

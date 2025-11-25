@@ -9,14 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import edu.ar.listovoy.model.Viaje;
-import edu.ar.listovoy.service.ViajeServiceImp;
+import edu.ar.listovoy.service.ViajeService;
 
 @Controller
 public class ViajeController {
 
     @Autowired
-    @Qualifier("servicioViajeMySQL")
-    private ViajeServiceImp viajeService;
+    
+    private ViajeService viajeService;
+
+    public ViajeController(ViajeService viajeService) {
+        this.viajeService= viajeService;
+    }
 
     // Mostrar formulario
     @GetMapping("/Viaje")
@@ -29,12 +33,9 @@ public class ViajeController {
     // Guardar viaje
     @PostMapping("/guardarViaje")
     public ModelAndView guardarViaje(@ModelAttribute("nuevoViaje") Viaje viajeAGuardar) {
-
         viajeService.agregarViaje(viajeAGuardar);
-
         ModelAndView modelo = new ModelAndView("listaViaje");
         modelo.addObject("lista", viajeService.listarTodosLosViajes());
-
         return modelo;
     }
 }
