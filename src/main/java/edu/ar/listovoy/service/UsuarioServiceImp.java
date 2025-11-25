@@ -45,13 +45,13 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public Usuario buscarUnUsuario(String UsuarioId) {
-        // TODO Auto-generated method stub
+        //
         throw new UnsupportedOperationException("Unimplemented method 'buscarPorNombreUsuario'"); 
     }
 
     @Override
     public Usuario buscarPorNombreUsuario(String nombre) {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'buscarPorNombreUsuario'");
     }
 
@@ -66,7 +66,7 @@ public class UsuarioServiceImp implements UsuarioService {
 
     @Override
     public List<Usuario> listarTodosUsuariosActivos() {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'listarTodosUsuariosActivos'");
     }
 }

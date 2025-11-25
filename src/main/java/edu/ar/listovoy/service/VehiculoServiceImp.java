@@ -19,7 +19,7 @@ public class VehiculoServiceImp implements VehiculoService {
 
     @Override
     public void borrarVehiculo(Integer Patente) {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'borrarVehiculo'");
     }
 
@@ -32,7 +32,7 @@ public class VehiculoServiceImp implements VehiculoService {
 
     @Override
     public void modificarVehiculo(Vehiculo Vehiculo) {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'modificarVehiculo'");
     }
 
@@ -43,13 +43,13 @@ public class VehiculoServiceImp implements VehiculoService {
 
     @Override
     public Vehiculo buscarUnVehiculo(Integer Patente) {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'buscarUnVehiculo'");
     }
 
     @Override
     public Vehiculo buscarUnVehiculoPorNombre(String nombre) {
-        // TODO Auto-generated method stub
+        // 
         throw new UnsupportedOperationException("Unimplemented method 'buscarUnVehiculoPorNombre'");
     }
 
