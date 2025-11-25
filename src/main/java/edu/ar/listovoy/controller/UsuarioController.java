@@ -1,138 +1,129 @@
 package edu.ar.listovoy.controller;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
-
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-
 import edu.ar.listovoy.model.Usuario;
-import edu.ar.listovoy.service.UsuarioService;
+import edu.ar.listovoy.service.UsuarioService; // Asegúrate de que este sea el Service con los 5 métodos
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller; 
+import org.springframework.ui.Model; 
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
-
-
-
-
-
+import java.util.List;
 
 
 @Controller
-public class UsuarioController{
+//@RequestMapping("/usuario") // Prefijo para todas las rutas del controlador (opcional pero recomendado)
+public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
-    //atributo de la clase
-   
-    @Qualifier("servicioUsuarioMySQL")
-    @Autowired
-    UsuarioService uuarioService;
-
-    UsuarioController(UsuarioService usuarioService) {
+    // Inyección de Dependencias por Constructor
+    public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
+    // --- MÉTODOS CRUD (CREATE, READ, UPDATE, DELETE) ---
+
+    // 1. Mostrar la lista de usuarios activos (READ ALL - Vista Principal)
+    // GET /usuarios/
+    @GetMapping("/listarUsuario")
+    public String listarUsuariosActivos(Model model) {
+        // Obtenemos solo los usuarios activos usando el método del servicio
+        List<Usuario> usuarios = usuarioService.obtenerTodosUsuarioActivos();
+
+        model.addAttribute("listaUsuario", usuarios); // Usamos "listaUsuarios" para la vista
+        return "listaUsuario"; // Retorna el nombre de la plantilla HTML
+    }
+
+    // 2. Mostrar el formulario para registrar un nuevo usuario
+    // GET /usuarios/nuevo
     @GetMapping("/usuario")
-
-  public ModelAndView getUsuario () {
-    //public string getUsuario() {
-
-    //Usuario nuevoUsuario = new Usuario();
-
-    //nuevoUsuario.setApellido(apellido: "Nuevo Apellido");
-    //nuevoUsuario.setNombre(nombre: "Nuevo Nombre");
-    //nuevoUsuario.setEmail(email:  "Nuevo Email");
-    
-
-    ModelAndView carrito = new ModelAndView("usuario");
-    //codigo
-    //return "usuario"
-    carrito.addObject("nuevoUsuario", usuarioService.crearNuevoUsuario() );
-    carrito.addObject("band",false);
-    return carrito;
-
-   }
-    @PostMapping("/guardarUsuario") 
-    public ModelAndView  saveUsuario(@ModelAttribute("nuevoUsuario") Usuario usuarioParaGuardar){
-
-        usuarioService.agregarUsuario(usuarioParaGuardar);
-        ModelAndView modelView = new ModelAndView("listaUsuarios");
-        System.out.println("usuario guardado correctamente");
-        modelView.addObject("lista", usuarioService.listarTodosUsuariosActivos());
-        return modelView;
+    public String mostrarFormularioRegistro(Model model) {
+        // Agregamos un objeto Usuario vacío
+        model.addAttribute("usuario", new Usuario());
+        // El atributo 'isEdit' puede ser útil para la vista
+        model.addAttribute("isEdit", false); 
+        return "usuario"; // Vista HTML del formulario
     }
 
-    //ELIMINAR
-    @GetMapping("/eliminarUsuario/{usuarioId}")
-     public ModelAndView eliminarUsuario(@PathVariable(name="usuarioId") String usuarioId) throws Exception {
-         ModelAndView carritoDeEliminar = new ModelAndView("listaUsuario");
-         usuarioService.borrarUsuario(usuarioId);  //le manda al serv. la tarea para que se encargue de borrar cierto usuario q tiene este id
-         carritoDeEliminar.addObject("lista", usuarioService.listarTodosUsuariosActivos());  //actualiza la lista para mandarsela ala vista
-        return carritoDeEliminar; //retorna al carrito
-    }
+    // 3. Guardar nuevo usuario (CREATE)
+    // POST /usuarios/guardar
+    @PostMapping("/guardar")
+    public String guardarUsuario(@ModelAttribute Usuario usuario) {
+        // El servicio guarda el objeto enviado desde el formulario
+        usuarioService.guardaUsuario(usuario);
 
-    //Modificar
-    @GetMapping("/modificarUsuario/(usuarioID)")
-        public ModelAndView buscarUsuarioParaModificar(@PathVariable(name="usuarioId") String usuarioId) throws Exception {
-        ModelAndView carritoParaModificarUsuario =new ModelAndView("usuario");
-        carritoParaModificarUsuario.addObject("nuevoUsuario", usuarioService.buscarUnUsuario(usuarioId));
-        carritoParaModificarUsuario.addObject("band",true);
-        return carritoParaModificarUsuario;
+        // Redirige al usuario a la lista principal después de guardar
+        return "redirect:/listarUsuario";
     }
     
-    @PostMapping("/modificarUsuario")
-    public ModelAndView modificarCliente (@ModelAttribute ("nuevoUsuario") Usuario usuarioModificado) {
-        ModelAndView listadoEditado = new ModelAndView("listaUsuario");
-        usuarioService.agregarUsuario(usuarioModificado);
-        listadoEditado.addObject("lista", usuarioService.listarTodosUsuariosActivos());
+    // 4. VER DETALLE DEL USUARIO (READ By ID)
+    // GET /usuarios/detalle/{id}
+    //@GetMapping("/detalle/{id}")
+    //public String verDetalleUsuario(@PathVariable("id") Integer id, Model model) {
 
-        return listadoEditado;
-    }
-    
+        // Usa el Optional<Usuario> del servicio y lanza 404 si no existe
+        //Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
+                //.orElseThrow(
+                       // () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado con ID: " + id));
 
-    @GetMapping("/listarUsuarios")
-    public ModelAndView listarUsuariosActivos(){
-    ModelAndView carritoParaMostrarUsuarios = new ModelAndView("listaUsuario");
-    carritoParaMostrarUsuarios.addObject("lista", usuarioService.listarTodosUsuariosActivos());
+       // model.addAttribute("usuario", usuario);
+       // return "detalleUsuario"; // Retorna la plantilla de detalle
+    //}
     
-        return carritoParaMostrarUsuarios;
-    }
-    
-     
-      
-     
+    // 5. MOSTRAR FORMULARIO PARA EDITAR (UPDATE - GET)
+    // GET /usuarios/editar/{id}
+    @GetMapping("/modificarUsuario/{id}")
+    public String mostrarFormularioEdicion(@PathVariable("id") Integer id, Model model) {
         
+        // 1. Obtener el usuario por ID, lanzando 404 si no existe
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
+                .orElseThrow(
+                    () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado para editar con ID: " + id));
         
+        // 2. Agregar el usuario encontrado y la bandera de edición
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("isEdit", true); 
+        
+        // 3. Reutilizar la vista del formulario
+        return "usuario";
+    }
+
+    // 6. PROCESAR ACTUALIZACIÓN (UPDATE - POST)
+    // POST /usuarios/actualizar/{id}
+    @PostMapping("/actualizarUsuario/{id}")
+    public String actualizarUsuario(@PathVariable("id") Integer id, @ModelAttribute Usuario usuarioActualizado) {
+        
+        // 1. Establecer el ID en el objeto recibido del formulario
+        // Asumiendo que el ID del modelo Usuario es 'usuarioId' (adaptar si es diferente)
+        usuarioActualizado.setUsuarioId(id); 
+
+        // 2. Llamar al servicio de actualización
+        Usuario usuarioResultado = usuarioService.actualizarUsuario(id, usuarioActualizado);
+        
+        // Si el servicio devuelve null, se podría manejar el error (opcional)
+        if (usuarioResultado == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Error al actualizar. Usuario no encontrado con ID: " + id);
+        }
+
+        // 3. Redirigir a la lista de usuarios
+        return "redirect:/listarUsuario";
+    }
     
-    
+    // 7. ELIMINAR USUARIO (DELETE - Borrado Lógico)
+    // GET /usuarios/eliminar/{id}
+    @GetMapping("/eliminarUsuario/{id}")
+    public String eliminarUsuarioLogico(@PathVariable("id") Integer id) {
+
+        boolean eliminado = usuarioService.eliminarUsuarioLogico(id);
+        
+        // Opcional: Manejar si no se encuentra el ID para eliminar
+        if (!eliminado) {
+            // Esto es opcional, ya que solo redirigirá, pero es buena práctica saber si funcionó
+            System.out.println("Advertencia: Intento de eliminar usuario con ID " + id + " no encontrado.");
+        }
+
+        // Redirige al usuario a la lista principal después de la operación
+        return "redirect:/listarUsuario";
+    }
 }
-
-  
-
-
-  
-      
-
-   //atributos                 //constructor sin parametro
-     
-
-  //metodos
-  //@GetMapping("/usuarioo")
-  //public String getUsuario()
-
-  //return "usuario";
-    
-
-     
-        
-
-
-
-
-    
- 

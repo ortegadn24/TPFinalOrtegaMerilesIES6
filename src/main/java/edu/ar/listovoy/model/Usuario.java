@@ -13,7 +13,7 @@ public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String usuarioId; // PK
+    private Integer usuarioId; // PK
 
 
     @Column
@@ -25,9 +25,7 @@ public class Usuario {
     @Column
     private String email;
     
-    @Column
-    private boolean estadoUsuario;
-
+   
 
     // Relación N:1  Un Usuario realiza muchos Viajes.
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
@@ -35,14 +33,15 @@ public class Usuario {
 
     // Atributo de Borrado Lógico
     @Column(nullable = false)
-    private boolean estado= true;
+    private boolean estadoUsuario= true;
  
    // Constructores, Getters y Setters
 
     public Usuario() {}  // constructor vacio
 
     // Constructores con parametros (sin relaciones)
-    public Usuario(String nombre, String apellido, String email, boolean estadoUsuario) {
+    public Usuario(Integer usuarioId, String nombre, String apellido, String email, boolean estadoUsuario) {
+        this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -50,8 +49,8 @@ public class Usuario {
     }
 
     // Getters y Setters
-    public String getUsuarioId() { return usuarioId; }
-    public void setId(String usuarioId) { this.usuarioId = usuarioId; }
+    public Integer getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

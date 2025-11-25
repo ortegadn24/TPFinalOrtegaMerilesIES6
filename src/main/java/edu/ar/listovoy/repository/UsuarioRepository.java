@@ -9,9 +9,9 @@ import java.util.List;
 
 //jpaRepository... el crud esta dentro del jpa
 @Repository
-public interface UsuarioRepository extends CrudRepository<Usuario, String> {
+public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
     
-    public List<Usuario> finByUsuarioEstado (Boolean usuarioEstado);
+    List<Usuario> findByEstadoUsuario(Boolean estado);
     /**
      
      * Obtiene una lista de Modelos de Usuarios cuyo atributo 'estado' es TRUE.

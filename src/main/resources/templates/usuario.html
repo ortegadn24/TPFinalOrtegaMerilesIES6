@@ -13,9 +13,9 @@
     </header>
 
     <main>
-        <form data-th-object="${nuevoUsuario}" data-th-action="${band}?@{/modificarUsuario}:@{/guardarUsuario}" method="post"enctype="multipart/form-date">
-            <label>Id</label>
-            <input type="text" placeholder="ingresar id" required data-th-field="*{id}"/>
+        <form data-th-object="${usuario}" data-th-action="${isEdit} ? @{/actualizarUsuario/{id}(id=${usuario.usuarioId})} : @{/guardar}" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" data-th-field="*{usuarioId}" th:if="${isEdit}" />
             <label>Nombre</label>
             <input type="text" placeholder="ingresar nombre" required data-th-field="*{nombre}"/>
             <label>Apellido</label>

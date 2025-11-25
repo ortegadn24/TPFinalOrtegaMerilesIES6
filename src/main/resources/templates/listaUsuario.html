@@ -28,7 +28,7 @@
         </thead>
         <tbody>
             <!-- th:each: Itera sobre la lista 'usuarios' que viene del controlador -->
-            <tr data-th-each="usuario : ${lista}">  # stoy llamando ala lista de alumno y haciend un recorrido x cada elemento
+            <tr data-th-each="usuario : ${listaUsuario}">  # stoy llamando ala lista de alumno y haciend un recorrido x cada elemento
 
                 <td th:text="${usuario.usuarioId}"></td>
                 <td th:text="${usuario.nombre}"></td>
@@ -36,8 +36,8 @@
                 <td th:text="${usuario.email}"></td>
                
                 <td>
-                    <a data-th-href="@{'/eliminarUsuario/'+${u.usuarioId}|}" class="btn btn-danger">Borrar</a>
-                    <a data-th-href="@{'/modificarUsuario/'+${u.usuarioId}|}" class="btn btn-success">Editar</a>
+                    <a data-th-href="@{'/eliminarUsuario/'+${usuario.usuarioId}|}" class="btn btn-danger">Borrar</a>
+                    <a data-th-href="@{'/modificarUsuario/'+${usuario.usuarioId}|}" class="btn btn-success">Editar</a>
                 </td>
                 
                
