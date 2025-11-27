@@ -48,7 +48,7 @@ public class UsuarioController {
 
     // 3. Guardar nuevo usuario (CREATE)
     // POST /usuarios/guardar
-    @PostMapping("/guardar")
+    @PostMapping("/guardarU")
     public String guardarUsuario(@ModelAttribute Usuario usuario) {
         // El servicio guarda el objeto enviado desde el formulario
         usuarioService.guardaUsuario(usuario);

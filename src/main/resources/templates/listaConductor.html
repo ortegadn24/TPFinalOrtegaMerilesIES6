@@ -1,65 +1,82 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lista conductor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <title>Lista de Conductores</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" 
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-    <h1 >Lista de Conductores Disponibles.. :)</h1>
-
-     <div class="conteiner"> 
-   
     
-
-     
-    <!-- th:unless: Muestra la tabla si hay Conductores -->
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                
-                <th>Edicion</th>
-                
-            </tr>
-        </thead>
-        <tbody>
-            <!-- th:each: Itera sobre la lista 'conductor' que viene del controlador -->
-            <tr data-th-each="conductor : ${listaConductor}">  <!--stoy llamando ala lista de alumno y haciend un recorrido x cada elemento -->
-
-                <td th:text="${conductor.conductorId}"></td>
-                <td th:text="${conductor.nombre}"></td>
-                <td th:text="${conductor.apellido}"></td>
-                <td th:text="${conductor.email}"></td>
-               
-                <td>
-                    <a data-th-href="@{'/eliminarConductor/'+${conductor.conductorId}|}" class="btn btn-danger">Borrar</a>
-                    <a data-th-href="@{'/modificarConductor/'+${conductor.conductorId}|}" class="btn btn-success">Editar</a>
-                </td>
-                
-               
-                
-            </tr>
+    <div class="container py-4"> <h1 class="text-center display-4 text-success my-4">
+            <i class="bi bi-truck-flatbed"></i> Lista de Conductores Disponibles
+        </h1>
+        
+        <main class="mt-4">
             
-
-        </tbody>
-     </table>
-      </div>
-     
-        <div class="text-center mt-4">
-            <a href="/conductor" class="btn btn-success btn-lg">Cargar nuevo Conductor</a>
-            <a href="/" class="btn btn-secondary btn-lg ms-2">Volver al Inicio</a>
-        </div>
-
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-0">
+                    
+                    <table class="table table-striped table-hover mb-0">
+                        <thead class="table-dark"> <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr data-th-each="conductor : ${listaConductor}">
+                                <td th:text="${conductor.conductorId}"></td>
+                                <td th:text="${conductor.nombre}"></td>
+                                <td th:text="${conductor.apellido}"></td>
+                                <td th:text="${conductor.email}"></td>
+                                
+                                <td class="text-center" style="min-width: 150px;">
+                                    <a data-th-href="@{'/modificarConductor/'+${conductor.conductorId}|}" 
+                                       class="btn btn-sm btn-outline-primary me-2">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a data-th-href="@{'/eliminarConductor/'+${conductor.conductorId}|}" 
+                                       class="btn btn-sm btn-danger"
+                                       onclick="return confirm('¿Estás seguro de que quieres eliminar este conductor?');">
+                                        <i class="bi bi-trash"></i> Borrar
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5 mb-5">
+                <a href="/conductor" class="btn btn-success btn-lg shadow-sm">
+                    <i class="bi bi-person-plus"></i> Cargar nuevo Conductor
+                </a>
+                <a href="/" class="btn btn-secondary btn-lg ms-3 shadow-sm">
+                    <i class="bi bi-arrow-left-circle"></i> Volver al Inicio
+                </a>
+            </div>
+        </main>
+        
+    </div>
     
-      <footer class="bg-light text-center py-3 mt-4">
-        <p class="mb-0">By OrtegaDaiana-MerilesWalter</p>
-       </footer>
-       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <footer class="navbar navbar-light bg-light py-3 border-top fixed-bottom">
+        <div class="container-fluid text-center">
+             <span class="navbar-text mx-auto text-muted">
+                 Desarrollado por OrtegaDaiana y MerilesWalter
+             </span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+            crossorigin="anonymous"></script>
 </body>
 </html>
