@@ -58,8 +58,6 @@ public class UsuarioController {
     }
     
    
-    
-    
     // 5. MUSTRAR FORMULARIO(usuariohtml) PARA EDITAR (UPDATE - GET)
     // GET usuarios editar por id}
     @GetMapping("/modificarUsuario/{id}")
