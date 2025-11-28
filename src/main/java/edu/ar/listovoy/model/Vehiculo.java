@@ -4,27 +4,50 @@ import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 
 @Component
 @Entity
 public class Vehiculo {
     //atributos
     @Id
-    private Integer patente;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincremental en MySQL
+    @Column(name = "vehiculo_id")
+    private Integer vehiculoId;
+     @Column(name = "patente", unique = true, nullable = false)
+    private String patente;
     @Column
     private String marca;
     @Column
     private String modelo;
     @Column
     private String tipoVehiculo;
-    @Column
-    private boolean estadoVehiculo;
+
+    @OneToOne
+    @JoinColumn(name="conductorId")
+    private Conductor conductor;
+    
+
+
+    // Atributo de borrado lógico
+
+    @Column(nullable=false)
+    private Boolean estadoVehiculo=true;
+
+    // Constructor vacio
 
     public Vehiculo (){
+    
+
 
     }
-    public Vehiculo (Integer patente,String marca,String modelo,String tipoVehiculo,boolean estadoVehiculo){
+    //Constructores con parametros(sin relaciones)
+    public Vehiculo (Integer vehiculoId,String patente,String marca,String modelo,String tipoVehiculo,boolean estadoVehiculo){
+        this.vehiculoId = vehiculoId;
         this.patente = patente;
         this.marca = marca;
         this.modelo = modelo;
@@ -33,12 +56,22 @@ public class Vehiculo {
     }
 
     // metodos particulares o accesores de los atributos
+    //Getters y Setters
 
-    public Integer getPatente() {
+    public Integer getVehiculoId() {
+        return vehiculoId;
+    }
+
+      public void setVehiculoId(Integer vehiculoId) {
+    
+        this.vehiculoId = vehiculoId;
+
+    }
+    public String getPatente() {
         return patente;
     }
 
-      public void setPatente(Integer patente) {
+    public void setPatente (String patente) {
         this.patente = patente;
     }
 
@@ -66,14 +99,11 @@ public class Vehiculo {
         this.tipoVehiculo = tipoVehiculo;
     }
 
-    public boolean getEstadoVehiculo() {
+    public Boolean getEstadoVehiculo() {
         return estadoVehiculo;
     }
 
-     public void setEstadoVehiculo(boolean estadoVehiculo) {
+     public void setEstadoVehiculo(Boolean estadoVehiculo) {
         this.estadoVehiculo = estadoVehiculo;
     }
-    
-
 }
-
