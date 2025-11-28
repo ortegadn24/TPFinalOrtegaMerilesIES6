@@ -8,7 +8,7 @@ public class ListovoyApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ListovoyApplication.class, args);
-		System.out.println(":)Aplicacion LISTOVOY iniciada correctamente en http://localhost:8081/");
+		System.out.println(":)Aplicacion LISTOVOY iniciada correctamente en http://localhost:8080/");
 	}
 
 }

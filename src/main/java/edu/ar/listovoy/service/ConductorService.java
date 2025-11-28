@@ -17,37 +17,36 @@ public class ConductorService {
     @Autowired
     private ConductorRepository conductorRepository;
 
-    // Métodos CRUD (5 métodos requeridos) 
+    // Métodos CRUD 
 
     // 1. CREAR / GUARDAR (Create)
     /**
      * Guarda un nuevo cliente o actualiza uno existente.
-     *  El objeto Cliente a persistir.
+     *  El objeto Cliente a conservar
      *  El objeto Cliente guardado/actualizado.
      */
     public Conductor guardaConductor(Conductor conductor) {
-        // La lógica de negocio podría ir aquí (ej: validar email antes de guardar)
+        // 
         return conductorRepository.save(conductor);
     }
     
-    // 2. "LEER TODOS' (Read All) - Filtrado por Borrado Lógico
+    // 2. "LEER TODOS'  - Filtrado por Borrado Lógico
     /**
      * Obtiene todos los c cuyo estado es TRUE (activos).
-     * Usa el Query Method definido en el Repository.
+     
      *  Lista de c activos.
      */
-    // Archivo: edu.ar.listovoy.service.ConductorService
+    // 
 
     public List<Conductor> obtenerTodosConductorActivos() {
     // Llama al método corregido
     return conductorRepository.findByEstadoConductor(true); 
 }
     
-    // 3. LEER POR ID (Read By ID)
+    // 3. LEER POR ID 
     /**
      * Obtiene un c por su ID, independientemente de su estado (activo o inactivo).
      *  El ID del c a buscar.
-     *  Un objeto Optional que puede contener el C.
      */
     public Optional<Conductor> obtenerConductorPorId(Integer conductorId) {
         // Usamos findById que devuelve un Optional para manejar la posible ausencia del c.
@@ -57,23 +56,19 @@ public class ConductorService {
     // 4. ACTUALIZAR (Update)
     /**
      * Actualiza la información de un cliente existente.
-     * id El ID del cliente a actualizar.
-     * detallesCliente Los nuevos datos del cliente.
-     *  El cliente actualizado o null si no se encontró.
+     * conductorId El ID del cliente a actualizar.
      */
     public Conductor actualizarConductor(Integer conductorId, Conductor detallesConductor) {
-        // 1. Busca el c existente
+        //  Busca el c existente
         return conductorRepository.findById(conductorId).map(conductorExistente -> {
-            // 2. Actualiza los campos (se asume que el ID ya está validado)
+            //  Actualiza los campos (se asume que el ID ya está validado)
             conductorExistente.setNombre(detallesConductor.getNombre());
             conductorExistente.setApellido(detallesConductor.getApellido());
             conductorExistente.setEmail(detallesConductor.getEmail());
            
             
-            // Nota: Podrías optar por no actualizar el estado aquí, o dejar que la lógica de soft-delete lo maneje.
-            // Para simplicidad, la actualización de estado solo se hace en eliminarClienteLogico.
-            
-            // 3. Guarda la entidad actualizada
+           
+            //  Guarda la entidad actualizada
             return conductorRepository.save(conductorExistente);
         }).orElse(null); // Devuelve null si no encuentra el c
     }
@@ -82,13 +77,12 @@ public class ConductorService {
     /**
      * Realiza un borrado lógico, cambiando el atributo 'estado' a FALSE.
      *  El ID del c a desactivar.
-     *  true si la eliminación lógica fue exitosa, false si el c no fue encontrado.
      */
     public boolean eliminarConductorLogico(Integer conductorId) {
         Optional<Conductor> conductorEncontrado = conductorRepository.findById(conductorId);    
         if (conductorEncontrado.isPresent()) {
             Conductor conductor = conductorEncontrado.get();
-            conductor.setEstadoConductor(false); // 🔑 Lógica clave: Borrado Lógico
+            conductor.setEstadoConductor(false); // 🔑 Borrado Lógico
             conductorRepository.save(conductor); // Persiste el cambio de estado
             return true;
         }

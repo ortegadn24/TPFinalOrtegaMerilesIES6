@@ -22,21 +22,20 @@ public class UsuarioService {
     // 1. CREAR / GUARDAR (Create)
     /**
      * Guarda un nuevo cliente o actualiza uno existente.
-     *  El objeto Cliente a persistir.
+     *  El objeto Cliente a conservar.
      *  El objeto Cliente guardado/actualizado.
      */
     public Usuario guardaUsuario(Usuario usuario) {
-        // La lógica de negocio podría ir aquí (ej: validar email antes de guardar)
+        //
         return usuarioRepository.save(usuario);
     }
     
-    // 2. "LEER TODOS' (Read All) - Filtrado por Borrado Lógico
+    // 2. "LEER TODOS' - Filtrado por Borrado Lógico
     /**
      * Obtiene todos los clientes cuyo estado es TRUE (activos).
-     * Usa el Query Method definido en el Repository.
      *  Lista de clientes activos.
      */
-    // Archivo: edu.ar.listovoy.service.UsuarioService
+    //
 
     public List<Usuario> obtenerTodosUsuarioActivos() {
     // Llama al método corregido
@@ -58,22 +57,18 @@ public class UsuarioService {
     /**
      * Actualiza la información de un cliente existente.
      * id El ID del cliente a actualizar.
-     * detallesCliente Los nuevos datos del cliente.
-     *  El cliente actualizado o null si no se encontró.
      */
     public Usuario actualizarUsuario(Integer usuarioId, Usuario detallesUsuario) {
-        // 1. Busca el cliente existente
+        //  Busca el cliente existente
         return usuarioRepository.findById(usuarioId).map(usuarioExistente -> {
-            // 2. Actualiza los campos (se asume que el ID ya está validado)
+            // Actualiza los campos (se asume que el ID ya está validado)
             usuarioExistente.setNombre(detallesUsuario.getNombre());
             usuarioExistente.setApellido(detallesUsuario.getApellido());
             usuarioExistente.setEmail(detallesUsuario.getEmail());
            
+          
             
-            // Nota: Podrías optar por no actualizar el estado aquí, o dejar que la lógica de soft-delete lo maneje.
-            // Para simplicidad, la actualización de estado solo se hace en eliminarClienteLogico.
-            
-            // 3. Guarda la entidad actualizada
+            // Guarda la entidad actualizada
             return usuarioRepository.save(usuarioExistente);
         }).orElse(null); // Devuelve null si no encuentra el cliente
     }
@@ -82,13 +77,12 @@ public class UsuarioService {
     /**
      * Realiza un borrado lógico, cambiando el atributo 'estado' a FALSE.
      *  El ID del cliente a desactivar.
-     *  true si la eliminación lógica fue exitosa, false si el cliente no fue encontrado.
      */
     public boolean eliminarUsuarioLogico(Integer usuarioId) {
         Optional<Usuario> usuarioEncontrado = usuarioRepository.findById(usuarioId);    
         if (usuarioEncontrado.isPresent()) {
             Usuario usuario = usuarioEncontrado.get();
-            usuario.setEstadoUsuario(false); // 🔑 Lógica clave: Borrado Lógico
+            usuario.setEstadoUsuario(false); // 🔑 Borrado Lógico
             usuarioRepository.save(usuario); // Persiste el cambio de estado
             return true;
         }

@@ -9,7 +9,7 @@ public class IndexController {
   
     @GetMapping("/index")
     public String getIndex() {
-        //codigo
+        //
         return "index";
     }
 }
