@@ -1,42 +1,164 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Vehículo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Vehículo</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+    <!-- Estilos propios -->
+    <style>
+        body {
+            background: #f2f6fc;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        .card {
+            border-radius: 16px;
+            box-shadow: 0px 4px 16px rgba(0,0,0,0.08);
+            border: none;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 12px;
+            font-size: 15px;
+            border: 1px solid #dce4f2;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #5a8dee;
+        }
+
+        .btn-submit {
+            background: #5a8dee;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            color: white;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #3b6edc;
+        }
+
+        footer {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        img.banner {
+            width: 100%;
+            border-radius: 16px 16px 0 0;
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
 <body>
 
-    <h1>Ingresar Vehículo</h1>
+    <header>
+        <h1>🚘 Registro de Vehículo</h1>
+    </header>
 
-    <!-- Formularo que envía al controller /guardarVehiculo -->
-    <form th:object="${nuevoVehiculo}" th:action="@{/guardarVehiculo}" method="post">
+    <main class="container d-flex justify-content-center">
+        <div class="col-md-6 col-lg-5 mt-4">
 
-        <label>Patente</label><br>
-        <input type="number" th:field="*{patente}" placeholder="Ingresar patente"><br><br>
+            <div class="card">
+                <!-- Imagen superior -->
+                <img class="banner" src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341" alt="Auto">
 
-        <label>Marca</label><br>
-        <input type="text" th:field="*{marca}" placeholder="Ingresar marca"><br><br>
+                <div class="card-body p-4">
 
-        <label>Modelo</label><br>
-        <input type="text" th:field="*{modelo}" placeholder="Ingresar modelo"><br><br>
+                    <form data-th-object="${vehiculo}" 
+                          data-th-action="${isEdit} ? @{/actualizarVehiculo/{id}(id=${vehiculo.vehiculoId})} : @{/guardar}"
+                          method="post">
 
-        <label>Tipo de Vehículo</label><br>
-        <select th:field="*{tipoVehiculo}">
-            <option value="Auto">Auto</option>
-            <option value="Moto">Moto</option>
-            <option value="Camioneta">Camioneta</option>
-        </select><br><br>
+                        
 
-        <label>Estado del Vehículo</label><br>
-        <select th:field="*{estadoVehiculo}">
-            <option value="true">Activo</option>
-            <option value="false">Inactivo</option>
-        </select><br><br>
+                         <!-- patente -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">patente</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Ej: AAA134"
+                                   required
+                                   data-th-field="*{patente}">
+                        </div>
 
-        <button type="submit">Guardar Vehículo</button>
-    </form>
 
+
+                    
+
+                        <!-- Marca -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Marca</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Ej: Toyota"
+                                   required
+                                   data-th-field="*{marca}">
+                        </div>
+
+                        <!-- Modelo -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Modelo</label>
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Ej: 2021"
+                                   required
+                                   data-th-field="*{modelo}">
+                        </div>
+
+                        <!-- Tipo de vehículo -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Tipo de Vehículo</label>
+                            <select class="form-control form-select" data-th-field="*{tipoVehiculo}" required>
+                                <option value="" disabled selected>Seleccionar tipo</option>
+                                <option value="BASE">BASE</option>
+                                <option value="LUXE">LUXE</option>
+                                <option value="PREMIUM">PREMIUM</option>
+                               
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                        <label class="form-label fw-semibold">Estado del vehículo</label>
+                        <select class="form-control form-select" data-th-field="*{estadoVehiculo}" required>
+                        <option value="true">Activo</option>
+                        <option value="false">Inactivo</option>
+                        </select>
+                        </div>
+
+                        <!-- Botón -->
+                        <button type="submit" class="btn-submit">✅ Guardar Vehículo</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center mt-4 mb-2">
+        <p>By OrtegaDaiana – MerilesWalter ❤️</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>

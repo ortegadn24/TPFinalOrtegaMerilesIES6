@@ -2,14 +2,18 @@ package edu.ar.listovoy.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Component;
+
 import jakarta.persistence.*;
 
-   
+@Component
 @Entity 
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // autoincremental MySQL
+     @Column(name = "usuarioId")
     private Integer usuarioId; // PK
 
 
@@ -22,9 +26,7 @@ public class Usuario {
     @Column
     private String email;
     
-    @Column
-    private boolean estadoUsuario;
-
+   
 
     // Relación N:1  Un Usuario realiza muchos Viajes.
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
@@ -32,14 +34,15 @@ public class Usuario {
 
     // Atributo de Borrado Lógico
     @Column(nullable = false)
-    private boolean estado= true;
+    private boolean estadoUsuario= true;
  
    // Constructores, Getters y Setters
 
     public Usuario() {}  // constructor vacio
 
     // Constructores con parametros (sin relaciones)
-    public Usuario(String nombre, String apellido, String email, boolean estadoUsuario) {
+    public Usuario(Integer usuarioId, String nombre, String apellido, String email, boolean estadoUsuario) {
+        this.usuarioId = usuarioId;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
@@ -48,7 +51,7 @@ public class Usuario {
 
     // Getters y Setters
     public Integer getUsuarioId() { return usuarioId; }
-    public void setId(Integer usuarioId) { this.usuarioId = usuarioId; }
+    public void setUsuarioId(Integer usuarioId) { this.usuarioId = usuarioId; }
 
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

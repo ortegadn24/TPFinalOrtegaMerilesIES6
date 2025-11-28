@@ -1,19 +1,97 @@
 package edu.ar.listovoy.service;
 
-import java.util.List;
+
+
 import edu.ar.listovoy.model.Vehiculo;
+import edu.ar.listovoy.repository.VehiculoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
+// Indica a Spring que esta clase es un componente de servicio
+@Service
+public class VehiculoService {
 
-public interface VehiculoService {
-    // declaración de metodos
-    // nominativo solo nombre
+    // Inyección de dependencias: permite usar los métodos del Repository
+    @Autowired
+    private VehiculoRepository vehiculoRepository;
 
-    public void borrarVehiculo(Integer Patente);
-     public void agregarVehiculo (Vehiculo Vehiculo);
-     public void modificarVehiculo (Vehiculo Vehiculo);
-     public List<Vehiculo> listarTodosVehiculos ();
-     public Vehiculo buscarUnVehiculo(Integer Patente);
-     public Vehiculo buscarUnVehiculoPorNombre (String nombre) ;
-     public Vehiculo crearNuevoVehiculo ();
+    // Métodos CRUD (5 métodos requeridos) 
+
+    // 1. CREAR / GUARDAR (Create)
+    /**
+     * Guarda un nuevo cliente o actualiza uno existente.
+     *  El objeto Cliente a persistir.
+     *  El objeto Cliente guardado/actualizado.
+     */
+    public Vehiculo guardarVehiculo(Vehiculo vehiculo) {
+        // La lógica de negocio podría ir aquí (ej: validar email antes de guardar)
+        return vehiculoRepository.save(vehiculo);
+    }
     
+    // 2. "LEER TODOS' (Read All) - Filtrado por Borrado Lógico
+    /**
+     * Obtiene todos los clientes cuyo estado es TRUE (activos).
+     * Usa el Query Method definido en el Repository.
+     *  Lista de clientes activos.
+     */
+    // Archivo: edu.ar.listovoy.service.UsuarioService
+
+    public List<Vehiculo> obtenerTodosVehiculoActivos() {
+    // Llama al método corregido
+    return vehiculoRepository.findByEstadoVehiculo(true); 
+}
+    
+    // 3. LEER POR ID (Read By ID)
+    /**
+     * Obtiene un cliente por su ID, independientemente de su estado (activo o inactivo).
+     *  El ID del cliente a buscar.
+     *  Un objeto Optional que puede contener el Cliente.
+     */
+    public Optional<Vehiculo> obtenerVehiculoPorId(Integer vehiculoId) {
+        // Usamos findById que devuelve un Optional para manejar la posible ausencia del cliente.
+        return vehiculoRepository.findById(vehiculoId);
+    }
+    
+    // 4. ACTUALIZAR (Update)
+    /**
+     * Actualiza la información de un cliente existente.
+     * id El ID del cliente a actualizar.
+     * detallesCliente Los nuevos datos del cliente.
+     *  El cliente actualizado o null si no se encontró.
+     */
+    public Vehiculo actualizarVehiculo(Integer vehiculoId, Vehiculo detallesVehiculo) {
+        // 1. Busca el cliente existente
+        return vehiculoRepository.findById(vehiculoId).map(vehiculoExistente -> {
+            // 2. Actualiza los campos (se asume que el ID ya está validado)
+            vehiculoExistente.setMarca(detallesVehiculo.getMarca());
+            vehiculoExistente.setModelo(detallesVehiculo.getModelo());
+            vehiculoExistente.setTipoVehiculo(detallesVehiculo.getTipoVehiculo());
+           
+            
+            // Nota: Podrías optar por no actualizar el estado aquí, o dejar que la lógica de soft-delete lo maneje.
+            // Para simplicidad, la actualización de estado solo se hace en eliminarClienteLogico.
+            
+            // 3. Guarda la entidad actualizada
+            return vehiculoRepository.save(vehiculoExistente);
+        }).orElse(null); // Devuelve null si no encuentra el cliente
+    }
+
+    // 5. ELIMINAR (Delete) - Borrado Lógico
+    /**
+     * Realiza un borrado lógico, cambiando el atributo 'estado' a FALSE.
+     *  El ID del cliente a desactivar.
+     *  true si la eliminación lógica fue exitosa, false si el cliente no fue encontrado.
+     */
+    public boolean eliminarVehiculoLogico(Integer vehiculoId) {
+        Optional<Vehiculo> vehiculoEncontrado = vehiculoRepository.findById(vehiculoId);    
+        if (vehiculoEncontrado.isPresent()) {
+            Vehiculo vehiculo = vehiculoEncontrado.get();
+            vehiculo.setEstadoVehiculo(false); // 🔑 Lógica clave: Borrado Lógico
+            vehiculoRepository.save(vehiculo); // Persiste el cambio de estado
+            return true;
+        }
+        return false; // Cliente no encontrado para eliminar
+    }
 }
