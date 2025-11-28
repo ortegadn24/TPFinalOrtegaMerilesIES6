@@ -1,40 +1,69 @@
 package edu.ar.listovoy.model;
 
-import jakarta.persistence.*;
+//import java.util.ArrayList;
+//import java.util.List;
 
+
+import jakarta.persistence.*;
 
 @Entity
 public class Conductor {
 
-    @Id
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer conductorId;
+    private Integer conductorId; // PK
 
+    
+    @Column
     private String nombre;
-    private String vehiculo;
-    private String patente;
 
+    @Column
+    private String apellido;
+    
+    @Column
+    private String email; 
+
+
+    // Relación 1:1 Conductor/Vehiculo : un conductor tienen un vehiculo. Un vehiculo tiene un conductor
+   
+    @OneToOne
+    @JoinColumn(name = "vehiculoId") 
+    private Vehiculo vehiculo;
+
+
+   // Atributo de Borrado Lógico
+    @Column(nullable = false)
+    private boolean estadoConductor= true;
+
+    // Constructor Vacío
     public Conductor() {}
 
-      // constructores con parametros sin relacion
-    public Conductor(String nombre, String vehiculo, String patente) {
+
+    // Constructor con parámetros (sin relaciones)
+    public Conductor(Integer conductorId, String nombre, String apellido,String email,boolean estadoConductor ) {
+        this.conductorId = conductorId;
         this.nombre = nombre;
-        this.vehiculo = vehiculo;
-        this.patente = patente;
+        this.apellido = apellido;
+        this.email = email;  
+        this.estadoConductor = estadoConductor;
     }
 
-    // Getters y Setters
+   // Getter y  setter
+
     public Integer getConductorId() { return conductorId; }
     public void setConductorId(Integer conductorId) { this.conductorId = conductorId; }
-
+    
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getVehiculo() { return vehiculo; }
-    public void setVehiculo(String vehiculo) { this.vehiculo = vehiculo; }
+    public String getApellido() { return apellido; }
+    public void setApellido(String apellido) { this.apellido = apellido; }
 
-    public String getPatente() { return patente; }
-    public void setPatente(String patente) { this.patente = patente; }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public Boolean getEstadoConductor() { return estadoConductor; }
+    public void setEstadoConductor(boolean setEstadoConductor) { this.estadoConductor = setEstadoConductor; }
+
+
 }
-
-
