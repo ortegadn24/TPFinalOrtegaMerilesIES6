@@ -26,9 +26,11 @@ public class Conductor {
 
     // Relación 1:1 Conductor/Vehiculo : un conductor tienen un vehiculo. Un vehiculo tiene un conductor
    
-    @OneToOne
-    @JoinColumn(name = "vehiculoId") 
-    private Vehiculo vehiculo;
+    // En Conductor.java
+    @OneToOne(mappedBy = "conductor") // "conductor" es el nombre del atributo en la clase Vehiculo
+     private Vehiculo vehiculo;
+
+   
 
 
    // Atributo de Borrado Lógico
@@ -63,7 +65,19 @@ public class Conductor {
     public void setEmail(String email) { this.email = email; }
 
     public Boolean getEstadoConductor() { return estadoConductor; }
-    public void setEstadoConductor(boolean setEstadoConductor) { this.estadoConductor = setEstadoConductor; }
+    // public void setEstadoConductor(boolean setEstadoConductor) { this.estadoConductor = setEstadoConductor; }
+    // Corrección 
+    public void setEstadoConductor(boolean estadoConductor) { 
+    this.estadoConductor = estadoConductor; }
+
+
+    public Vehiculo getVehiculo() {
+    return vehiculo;}
+
+    public void setVehiculo(Vehiculo vehiculo) {
+    this.vehiculo = vehiculo;}
+
+
 
 
 }

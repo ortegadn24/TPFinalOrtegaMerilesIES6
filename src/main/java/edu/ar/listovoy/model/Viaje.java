@@ -1,98 +1,70 @@
+// Redraw branch position test
 package edu.ar.listovoy.model;
 
-import org.springframework.stereotype.Component;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-@Component
 @Entity
+@Table(name = "viaje")
 public class Viaje {
-    //atributos
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer viajeId;
 
-    @Column
-    private String tipoViaje;
-    @Column
-    private String costo;
-    @Column
-    private String fecha;
-    @Column
-    private boolean estadoViaje;
+    @Column(nullable = false)
+    private String tipoDistancia;
 
-    // --------- RELACIONES -----------
+    @Column
+    private Double costoFinal;
 
-    // Muchos viajes pertenecen a un usuario
+    @Column
+    private LocalDateTime fechaViaje = LocalDateTime.now();
+
+    // Relaciones
     @ManyToOne
-    @JoinColumn(name = "usuario_id")   // FK
+    @JoinColumn(name = "usuarioId", nullable = false)
     private Usuario usuario;
 
-    // Muchos viajes usan un vehículo
     @ManyToOne
-    @JoinColumn(name = "patente")      // FK
+    @JoinColumn(name = "vehiculoId", nullable = false)
     private Vehiculo vehiculo;
 
-    // --------- CONSTRUCTORES -----------
+    // Borrado lógico
+    @Column(nullable = false)
+    private boolean estado = true;
 
+    public Viaje() {}
 
-
-    public Viaje (){
-        
-
-    }
-    public Viaje (Integer viajeId,String tipoViaje,String costo,String fecha,boolean estadoViaje){
-        this.viajeId = viajeId;
-        this.tipoViaje = tipoViaje;
-        this.costo = costo;
-        this.fecha = fecha;
-        this.estadoViaje = estadoViaje;
-    }
-
-    // metodos particulares o accesores de los atributos
-
-    public Integer getViajeId() {
-        return viajeId;
+    public Viaje(String tipoDistancia, Double costoFinal, Usuario usuario, Vehiculo vehiculo) {
+        this.tipoDistancia = tipoDistancia;
+        this.costoFinal = costoFinal;
+        this.usuario = usuario;
+        this.vehiculo = vehiculo;
+        this.fechaViaje = LocalDateTime.now();
+        this.estado = true;
     }
 
-      public void setViajeId(Integer viajeId) {
-        this.viajeId = viajeId;
-    }
+    // Getters y Setters
+    public Integer getViajeId() { return viajeId; }
+    public void setViajeId(Integer viajeId) { this.viajeId = viajeId; }
 
-        public String getTipoViaje() {
-        return tipoViaje;
-    }
+    public String getTipoDistancia() { return tipoDistancia; }
+    public void setTipoDistancia(String tipoDistancia) { this.tipoDistancia = tipoDistancia; }
 
-     public void setTipoViaje(String tipoViaje) {
-        this.tipoViaje = tipoViaje;
-    }
+    public Double getCostoFinal() { return costoFinal; }
+    public void setCostoFinal(Double costoFinal) { this.costoFinal = costoFinal; }
 
-      public String getCosto() {
-        return costo;
-    }
+    public LocalDateTime getFechaViaje() { return fechaViaje; }
+    public void setFechaViaje(LocalDateTime fechaViaje) { this.fechaViaje = fechaViaje; }
 
-     public void setCosto(String costo) {
-        this.costo = costo;
-    }
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
 
-     public String getFecha() {
-        return fecha;
-    }
+    public Vehiculo getVehiculo() { return vehiculo; }
+    public void setVehiculo(Vehiculo vehiculo) { this.vehiculo = vehiculo; }
 
-     public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public boolean getEstadoViaje() {
-        return estadoViaje;
-    }
-
-     public void setEstado(boolean estadoViaje) {
-        this.estadoViaje = estadoViaje;
-    }
-    
+    public boolean isEstado() { return estado; }
+    public void setEstado(boolean estado) { this.estado=estado;}
 
 }

@@ -38,7 +38,7 @@ public class Vehiculo {
     @Column(nullable=false)
     private Boolean estadoVehiculo=true;
 
-    // Constructor vacio
+    // Constructor por defecto vacio
 
     public Vehiculo (){
     
@@ -46,13 +46,14 @@ public class Vehiculo {
 
     }
     //Constructores con parametros(sin relaciones)
-    public Vehiculo (Integer vehiculoId,String patente,String marca,String modelo,String tipoVehiculo,boolean estadoVehiculo){
+    public Vehiculo (Integer vehiculoId,String patente,String marca,String modelo,String tipoVehiculo,boolean estadoVehiculo, Conductor conductor){
         this.vehiculoId = vehiculoId;
         this.patente = patente;
         this.marca = marca;
         this.modelo = modelo;
         this.tipoVehiculo = tipoVehiculo;
         this.estadoVehiculo = estadoVehiculo;
+        this.conductor = conductor;
     }
 
     // metodos particulares o accesores de los atributos
@@ -106,4 +107,23 @@ public class Vehiculo {
      public void setEstadoVehiculo(Boolean estadoVehiculo) {
         this.estadoVehiculo = estadoVehiculo;
     }
+
+    // --- Métodos de acceso para la relación Conductor ---
+
+    
+     //Obtiene el conductor asignado al vehículo.
+     
+    public Conductor getConductor() {
+        return conductor;
+    }
+
+    
+     //Asigna un conductor al vehículo.
+     
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
+    }
+
+
+
 }

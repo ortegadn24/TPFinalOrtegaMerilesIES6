@@ -65,12 +65,12 @@ public class UsuarioController {
         
         // 1-Obteniene el usuario por ID.
         Usuario usuario = usuarioService.obtenerUsuarioPorId(id)
-                .orElseThrow(
+                .orElseThrow(     //
                     () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado para editar con ID: " + id));
         
         // 2-Agrega al usuario encontrado y la bandera de edición
-        model.addAttribute("usuario", usuario);
-        model.addAttribute("isEdit", true); 
+        model.addAttribute("usuario", usuario); //añadiendo un usuario
+        model.addAttribute("isEdit", true); // dato boleano
         
         // 3. Reorna la vista del formulario tando en usuariohtml
         return "usuario";
@@ -93,19 +93,19 @@ public class UsuarioController {
         }
 
         // Retorna a la lista de usuarios 
-        return "redirect:/listarUsuario";
+        return "redirect:/listarUsuario";// me redireccion redirije a una url
     }
     
     // 7. ELIMINAR USUARIO (DELETE - Borrado Lógico)
-    // GET usuarios eliminar por id
-    @GetMapping("/eliminarUsuario/{id}")
+    // GET usuarios eliminar por id       //llama al metodo eliminar
+    @GetMapping("/eliminarUsuario/{id}")  //usa com parametro el id
     public String eliminarUsuarioLogico(@PathVariable("id") Integer id) {
 
         boolean eliminado = usuarioService.eliminarUsuarioLogico(id);
         
         // es una opcion  si no se encuentra el ID para eliminar
         if (!eliminado) {
-            // Esto es opcion
+            // Esto es opcion si esq tira un error saldra eso
             System.out.println("Advertencia: Intento de eliminar usuario con ID " + id + " no encontrado.");
         }
 

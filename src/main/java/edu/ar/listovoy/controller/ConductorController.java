@@ -29,7 +29,7 @@ public class ConductorController {
     public String listarConductoresActivos(Model model) {
         // Obtenemos solo los c activos usando el método del servicio
         List<Conductor> conductores = conductorService.obtenerTodosConductorActivos();
-
+        //agregando un campo vavio
         model.addAttribute("listaConductor", conductores); // Usamos "listaConductor" para la vista
         return "listaConductor"; // Retorna el nombre de la plantilla HTML
     }

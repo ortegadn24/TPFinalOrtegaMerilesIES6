@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Seleccionar Usuario - Listovoy</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0"><i class="bi bi-person-check"></i> Paso 1: Seleccionar Usuario</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre Completo</th>
+                        <th>Email</th>
+                        <th class="text-center">Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${usuarios}">
+                        <td th:text="${u.usuarioId}"></td>
+                        <td th:text="${u.nombre + ' ' + u.apellido}"></td>
+                        <td th:text="${u.email}"></td>
+                        <td class="text-center">
+                            <a th:href="@{/viaje/seleccionarVehiculo/{id}(id=${u.usuarioId})}" 
+                               class="btn btn-primary btn-sm">
+                                <i class="bi bi-cursor-fill"></i> Elegir
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-right">
+            <a href="/" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
