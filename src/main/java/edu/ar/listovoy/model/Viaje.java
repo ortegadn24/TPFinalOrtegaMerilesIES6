@@ -1,4 +1,3 @@
-// Redraw branch position test
 package edu.ar.listovoy.model;
 
 import jakarta.persistence.*;
@@ -10,24 +9,25 @@ public class Viaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "viaje_id")  // ← Añadido para ser explícito
     private Integer viajeId;
 
-    @Column(nullable = false)
+    @Column(name = "tipo_distancia", nullable = false)
     private String tipoDistancia;
 
-    @Column
+    @Column(name = "costo_final")
     private Double costoFinal;
 
-    @Column
+    @Column(name = "fecha_viaje")
     private LocalDateTime fechaViaje = LocalDateTime.now();
 
-    // Relaciones
+    // Relaciones - CORREGIDO: nombre de columna con guión bajo
     @ManyToOne
-    @JoinColumn(name = "usuarioId", nullable = false)
+    @JoinColumn(name = "usuario_id", nullable = false)  // ← CORREGIDO
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "vehiculoId", nullable = false)
+    @JoinColumn(name = "vehiculo_id", nullable = false)  // ← CORREGIDO
     private Vehiculo vehiculo;
 
     // Borrado lógico
@@ -65,6 +65,5 @@ public class Viaje {
     public void setVehiculo(Vehiculo vehiculo) { this.vehiculo = vehiculo; }
 
     public boolean isEstado() { return estado; }
-    public void setEstado(boolean estado) { this.estado=estado;}
-
+    public void setEstado(boolean estado) { this.estado = estado; }
 }

@@ -29,8 +29,9 @@
                         <td th:text="${u.nombre + ' ' + u.apellido}"></td>
                         <td th:text="${u.email}"></td>
                         <td class="text-center">
-                            <a th:href="@{/viaje/seleccionarVehiculo/{id}(id=${u.usuarioId})}" 
-                               class="btn btn-primary btn-sm">
+                            <a th:href="@{/viaje/seleccionarVehiculo/{usuarioId}(usuarioId=${u.usuarioId})}" class="btn btn-primary btn-sm">
+
+    
                                 <i class="bi bi-cursor-fill"></i> Elegir
                             </a>
                         </td>

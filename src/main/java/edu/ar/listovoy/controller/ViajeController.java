@@ -1,6 +1,5 @@
 package edu.ar.listovoy.controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,73 +25,44 @@ public class ViajeController {
     @Autowired
     private ViajeService viajeService;
 
-    // Paso 1 → seleccionar usuario
+    // --- NUEVO --- Redirigir /viaje a la selección de usuario
+    @GetMapping
+    public String index() {
+        return "redirect:/viaje/seleccionarUsuario";
+    }
+
+    // Paso 1 → Seleccionar usuario
     @GetMapping("/seleccionarUsuario")
     public String seleccionarUsuario(Model model) {
         model.addAttribute("usuarios", usuarioService.obtenerTodosUsuarioActivos());
-        return "viaje/viajeList";
+        return "listaViaje"; 
     }
 
-    
-
-     // Paso 2 → seleccionar vehículo (no enviar un Optional a la vista)
+    // Paso 2 → Seleccionar vehículo
     @GetMapping("/seleccionarVehiculo/{usuarioId}")
     public String seleccionarVehiculo(@PathVariable Integer usuarioId, Model model) {
-    // Agregamos .orElse(null) para que el modelo reciba el Usuario y no un Optional
-    model.addAttribute("usuario", usuarioService.obtenerUsuarioPorId(usuarioId).orElse(null));
-    model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculoActivos());
-    return "viaje/viajeForm";
+        model.addAttribute("usuario", usuarioService.obtenerUsuarioPorId(usuarioId).orElse(null));
+        model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculoActivos());
+        return "viajeForm"; 
+    }
+
+    // Paso 3 → Guardar viaje
+    @PostMapping("/guardar")
+    public String guardar(@RequestParam Integer usuarioId,
+                          @RequestParam Integer vehiculoId,
+                          @RequestParam String tipoDistancia,
+                          Model model) {
+
+        Usuario usuario = usuarioService.obtenerUsuarioPorId(usuarioId).orElse(null);
+        Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(vehiculoId).orElse(null);
+
+        Viaje viajeGuardado = viajeService.registrarViaje(usuario, vehiculo, tipoDistancia);
+
+        model.addAttribute("viaje", viajeGuardado);
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("vehiculo", vehiculo);
+        model.addAttribute("conductor", vehiculo != null ? vehiculo.getConductor() : null);
+
+        return "resumenViaje";
 }
-
-   //  Paso 3 (guardar)
-
-@PostMapping("/guardar")
-public String guardar(@RequestParam Integer usuarioId, @RequestParam Integer vehiculoId, 
-                      @RequestParam String tipoDistancia, Model model) {
-
-    Usuario usuario = usuarioService.obtenerUsuarioPorId(usuarioId).orElse(null);
-    Vehiculo vehiculo = vehiculoService.obtenerVehiculoPorId(vehiculoId).orElse(null);
-
-    // Guardamos y obtenemos el objeto ya persistido (con ID y costo)
-    Viaje viajeGuardado = viajeService.registrarViaje(usuario, vehiculo, tipoDistancia);
-
-    model.addAttribute("viaje", viajeGuardado); // Usamos el objeto guardado
-    model.addAttribute("usuario", usuario);
-    model.addAttribute("vehiculo", vehiculo);
-    model.addAttribute("conductor", vehiculo != null ? vehiculo.getConductor() : null);
-
-    return "resumenViaje";
 }
-
-
-    // Paso 2 → seleccionar vehículo
-   // @GetMapping("/seleccionarVehiculo/{usuarioId}")
-    //public String seleccionarVehiculo(@PathVariable Integer usuarioId, Model model) {
-      //  model.addAttribute("usuario", usuarioService.obtenerUsuarioPorId(usuarioId));
-       // model.addAttribute("vehiculos", vehiculoService.obtenerTodosVehiculoActivos());
-        //return "viaje/viajeForm";
-   // }
-
-    // Paso 3 → guardar el viaje
-    //@PostMapping("/guardar")
-   // public String guardar(
-          //  @RequestParam Integer usuarioId,
-           // @RequestParam Integer vehiculoId,
-           // @RequestParam String tipoDistancia,
-            //Model model) {
-
-        //Usuario usuario = usuarioService.obtenerUsuarioPorId(usuarioId);
-        //Vehiculo vehiculo = vehiculoService. obtenerVehiculoPorId(vehiculoId);
-
-        //Viaje viaje = viajeService.registrarViaje(usuario, vehiculo, tipoDistancia);
-
-        //model.addAttribute("viaje", viaje);
-       // model.addAttribute("usuario", usuario);
-       // model.addAttribute("vehiculo", vehiculo);
-       // model.addAttribute("conductor", vehiculo.getConductor());
-
-        //return "resumenViaje";
-}
-
-
-
